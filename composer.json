@@ -12,7 +12,8 @@
         "laravel-lang/common": "^6.4",
         "laravel/framework": "^11.31",
         "laravel/reverb": "^1.0",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "statikbe/laravel-filament-chained-translation-manager": "^3.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
