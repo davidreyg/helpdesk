@@ -225,5 +225,16 @@
     "Web Server is Down": "Web Server is Down",
     "Whoops!": "Whoops!",
     "Yes": "Yes",
-    "You are receiving this email because we received a password reset request for your account.": "You are receiving this email because we received a password reset request for your account."
+    "You are receiving this email because we received a password reset request for your account.": "You are receiving this email because we received a password reset request for your account.",
+    "Employee": "Employee",
+    "Names": "Names",
+    "Paternal Surname": "Paternal Surname",
+    "Maternal Surname": "Maternal Surname",
+    "Email": "Email",
+    "Phone": "Phone",
+    "Birth Date": "Birth Date",
+    "Document Type": "Document Type",
+    "Document Number": "Document Number",
+    "Gender": "Gender",
+    "Address": "Address"
 }
