@@ -238,5 +238,11 @@
     "Document Number": "N° de documento",
     "Gender": "Sexo",
     "Address": "Dirección",
-    "Company": "Empresa"
+    "Company": "Empresa",
+    "Requirement": "Requerimiento",
+    "Code": "Código",
+    "Attention Type": "Tipo de atención",
+    "Requirement Type": "Tipo de requerimiento",
+    "Priority": "Prioridad",
+    "Description": "Descripción"
 }

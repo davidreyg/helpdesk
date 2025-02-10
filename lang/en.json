@@ -238,5 +238,11 @@
     "Document Number": "Document Number",
     "Gender": "Gender",
     "Address": "Address",
-    "Company": "Company"
+    "Company": "Company",
+    "Requirement": "Requirement",
+    "Code": "Code",
+    "Attention Type": "Attention Type",
+    "Requirement Type": "Requirement Type",
+    "Priority": "Priority",
+    "Description": "Description"
 }
