@@ -228,6 +228,7 @@
     "You are receiving this email because we received a password reset request for your account.": "You are receiving this email because we received a password reset request for your account.",
     "Employee": "Employee",
     "Names": "Names",
+    "Name": "Name",
     "Paternal Surname": "Paternal Surname",
     "Maternal Surname": "Maternal Surname",
     "Email": "Email",
@@ -236,5 +237,6 @@
     "Document Type": "Document Type",
     "Document Number": "Document Number",
     "Gender": "Gender",
-    "Address": "Address"
+    "Address": "Address",
+    "Company": "Company"
 }
