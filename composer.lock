@@ -4,8 +4,76 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10771193fd1c9c666a3e1496f75af25a",
+    "content-hash": "96ff086f47938d1a4dfc42a7f424e88d",
     "packages": [
+        {
+            "name": "akaunting/laravel-money",
+            "version": "6.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akaunting/laravel-money.git",
+                "reference": "1864f4274cb73278256d9677ccd20b6e59143fe4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akaunting/laravel-money/zipball/1864f4274cb73278256d9677ccd20b6e59143fe4",
+                "reference": "1864f4274cb73278256d9677ccd20b6e59143fe4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0|^11.0",
+                "illuminate/support": "^10.0|^11.0",
+                "illuminate/validation": "^10.0|^11.0",
+                "illuminate/view": "^10.0|^11.0",
+                "php": "^8.2",
+                "vlucas/phpdotenv": "^5.4.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0|^9.0",
+                "phpunit/phpunit": "^10.5|^11.0",
+                "vimeo/psalm": "^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Akaunting\\Money\\Provider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Akaunting\\Money\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Duliçi",
+                    "email": "info@akaunting.com",
+                    "homepage": "https://akaunting.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Currency formatting and conversion package for Laravel",
+            "keywords": [
+                "convert",
+                "currency",
+                "format",
+                "laravel",
+                "money"
+            ],
+            "support": {
+                "source": "https://github.com/akaunting/laravel-money/tree/6.0.1"
+            },
+            "time": "2025-02-08T22:35:02+00:00"
+        },
         {
             "name": "anourvalar/eloquent-serialize",
             "version": "1.2.28",
@@ -117,6 +185,81 @@
                 "source": "https://github.com/archtechx/enums/tree/v1.1.1"
             },
             "time": "2024-10-29T15:38:32+00:00"
+        },
+        {
+            "name": "awcodes/filament-table-repeater",
+            "version": "v3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/awcodes/filament-table-repeater.git",
+                "reference": "beaa9cdb25b4211b00c675bbcbf2584cd777536c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/awcodes/filament-table-repeater/zipball/beaa9cdb25b4211b00c675bbcbf2584cd777536c",
+                "reference": "beaa9cdb25b4211b00c675bbcbf2584cd777536c",
+                "shasum": ""
+            },
+            "require": {
+                "filament/forms": "^3.2.116",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.13.5"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^7.0",
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^2.0",
+                "pestphp/pest-plugin-faker": "^2.0",
+                "pestphp/pest-plugin-laravel": "^2.0",
+                "pestphp/pest-plugin-livewire": "^2.0",
+                "phpunit/phpunit": "^10.0",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Awcodes\\TableRepeater\\TableRepeaterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Awcodes\\TableRepeater\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Weston",
+                    "email": "awcodes1@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A modified version of the Filament Forms Repeater to display it as a table.",
+            "homepage": "https://github.com/awcodes/filament-table-repeater",
+            "keywords": [
+                "awcodes",
+                "filament",
+                "laravel",
+                "plugin",
+                "table repeater"
+            ],
+            "support": {
+                "issues": "https://github.com/awcodes/filament-table-repeater/issues",
+                "source": "https://github.com/awcodes/filament-table-repeater/tree/v3.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/awcodes",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-11-13T18:07:04+00:00"
         },
         {
             "name": "bezhansalleh/filament-language-switch",
