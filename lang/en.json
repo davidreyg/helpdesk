@@ -245,5 +245,10 @@
     "Requirement Type": "Requirement Type",
     "Priority": "Priority",
     "Description": "Description",
-    "Customer": "Customer"
+    "Customer": "Customer",
+    "Quotation": "Quotation",
+    "Quantity": "Quantity",
+    "Unit": "Unit",
+    "Currency": "Currency",
+    "Notes": "Notes"
 }

@@ -245,5 +245,10 @@
     "Requirement Type": "Tipo de requerimiento",
     "Priority": "Prioridad",
     "Description": "Descripción",
-    "Customer": "Cliente"
+    "Customer": "Cliente",
+    "Quotation": "Cotizacion",
+    "Quantity": "Cantidad",
+    "Unit": "Unidad",
+    "Currency": "Moneda",
+    "Notes": "Notas"
 }
