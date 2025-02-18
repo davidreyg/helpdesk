@@ -65,6 +65,11 @@ services:
                 - ping
             retries: 3
             timeout: 5s
+    gotenberg:
+        image: gotenberg/gotenberg:8
+        container_name: gotenberg.helpdesk
+        networks:
+            - sail
 networks:
     sail:
         driver: bridge
