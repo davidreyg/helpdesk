@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Enums\CurrencyEnum;
+use App\Enums\PaymentTypeEnum;
 use App\Filament\Admin\Resources\QuotationResource\Pages;
 use App\Filament\Admin\Resources\QuotationResource\RelationManagers;
 use App\Models\Quotation;
@@ -10,9 +11,11 @@ use App\Utilities\CurrencyConverter;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ViewField;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -53,11 +56,20 @@ class QuotationResource extends Resource
                     ->live()
                     ->hint(new HtmlString(\Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="data.currency" />')))
                     ->options(CurrencyEnum::class),
+                Forms\Components\Select::make('payment_type')
+                    ->label(__('Payment Type'))
+                    ->required()
+                    ->options(PaymentTypeEnum::class),
                 Section::make('Items')
                     ->schema([
                         TableRepeater::make('items')
                             ->hiddenLabel()
                             ->relationship('quotationItems')
+                            ->addActionLabel(__('Add'))
+                            ->afterStateUpdated(function ($livewire) {
+                                // Aquí detectamos si se eliminó un ítem
+                                self::updateQuotationTotals($livewire);
+                            })
                             ->headers([
                                 Header::make('Qty')
                                     ->label(__('Quantity'))
@@ -89,7 +101,8 @@ class QuotationResource extends Resource
                                         )
                                     )
                                     ->afterStateUpdated(function (Get $get, Set $set, $livewire) {
-                                        self::updateTotals($get, $set, $livewire);
+                                        self::updateItemTotals($get, $set, $livewire);
+                                        self::updateQuotationTotals($livewire);
                                     }),
                                 TextInput::make('description')
                                     ->required()
@@ -108,30 +121,27 @@ class QuotationResource extends Resource
                                         )
                                     )
                                     ->afterStateUpdated(function (Get $get, Set $set, $livewire) {
-                                        self::updateTotals($get, $set, $livewire);
+                                        self::updateItemTotals($get, $set, $livewire);
+                                        self::updateQuotationTotals($livewire);
                                     })
                                     ->money(fn(Get $get) => $get('../../currency')),
                                 TextInput::make('total')
                                     ->readOnly()
                                     ->hiddenLabel()
                                     ->money(fn(Get $get) => $get('../../currency'))
-                                    ->afterStateHydrated(function (Get $get, Set $set) {
-                                        $price = $get('price') ?? 0;
-                                        $quantity = $get('quantity') ?? 0;
-                                        $currency = $get('../../currency');
-
-                                        if ($price && $quantity) {
-                                            $priceInt = CurrencyConverter::prepareForAccessor($price, $currency);
-                                            $total = $priceInt * $quantity;
-                                            $totalConverted = CurrencyConverter::prepareForMutator($total, $currency);
-                                            $set('total', $totalConverted);
-                                        } else {
-                                            $set('total', '-');
-                                        }
+                                    ->afterStateHydrated(function (Get $get, Set $set, $livewire) {
+                                        self::updateItemTotals($get, $set, $livewire);
+                                        self::updateQuotationTotals($livewire);
                                     }),
                             ])
                     ]),
-
+                ViewField::make('subTotal')
+                    ->view('filament.admin.forms.components.total')
+                    ->columnSpanFull()
+                    ->viewData([
+                        'min' => 1,
+                        'max' => 5,
+                    ]),
                 Forms\Components\Textarea::make('notes')
                     ->label(__('Notes'))
                     ->columnSpanFull(),
@@ -190,17 +200,32 @@ class QuotationResource extends Resource
     }
 
     // This function updates totals based on the selected products and quantities
-    public static function updateTotals(Get $get, Set $set, Component $livewire): void
+    public static function updateItemTotals(Get $get, Set $set, Component $livewire): void
     {
         // Retrieve the state path of the form. Most likely it's `data` but it could be something else.
-        $statePath = $livewire->getFormStatePath();
+        $currency = $get('../../currency') ?? 'PEN';
         $qty = floatval($get('quantity'));
         $price = floatval($get('price'));
-        $priceInt = CurrencyConverter::prepareForAccessor($price, $get('../../currency'));
+        $priceInt = CurrencyConverter::prepareForAccessor($price, $currency);
 
 
         $total = $priceInt * $qty;
-        $totalConverted = CurrencyConverter::prepareForMutator($total, $get('../../currency'));
+        $totalConverted = CurrencyConverter::prepareForMutator($total, $currency);
         $set('total', $totalConverted);
+    }
+    public static function updateQuotationTotals(Component $livewire): void
+    {
+        $statePath = $livewire->getFormStatePath();
+        // Retrieve the state path of the form. Most likely it's `data` but it could be something else.
+        // dd(data_get($livewire, $statePath));
+        $data = data_get($livewire, $statePath);
+        $currency = data_get($livewire, $statePath . '.currency') ?? 'PEN';
+        $totalSum = collect($data['items'])
+            ->pluck('total')
+            ->filter()
+            ->map(fn($item) => CurrencyConverter::prepareForAccessor($item, $currency))
+            ->sum();
+        data_set($livewire, $statePath . '.subTotal', $totalSum);
+        // dump($totalSum);
     }
 }

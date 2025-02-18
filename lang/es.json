@@ -250,5 +250,7 @@
     "Quantity": "Cantidad",
     "Unit": "Unidad",
     "Currency": "Moneda",
-    "Notes": "Notas"
+    "Notes": "Notas",
+    "Payment Type": "Forma de pago",
+    "Direct Cost": "Costo directo"
 }

@@ -250,5 +250,7 @@
     "Quantity": "Quantity",
     "Unit": "Unit",
     "Currency": "Currency",
-    "Notes": "Notes"
+    "Notes": "Notes",
+    "Payment Type": "Payment Type",
+    "Direct cost": "Direct cost"
 }

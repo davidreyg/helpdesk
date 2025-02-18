@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\CurrencyEnum;
+use App\Enums\PaymentTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class Quotation extends Model
@@ -11,6 +12,7 @@ class Quotation extends Model
         'code',
         'currency',
         'notes',
+        'payment_type',
         'customer_id',
     ];
 
@@ -18,6 +20,7 @@ class Quotation extends Model
     {
         return [
             'currency' => CurrencyEnum::class,
+            'payment_type' => PaymentTypeEnum::class,
         ];
     }
 

@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('customer_id')->constrained();
             $table->string('code', 100);
+            $table->string('payment_type', 100);
             $table->string('currency', 100);
             $table->text('notes')->nullable();
             $table->timestamps();
