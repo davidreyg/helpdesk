@@ -14,7 +14,7 @@ class SuperAdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $superadmin = User::create([
             'name' => 'superadmin',
             'email' => 'superadmin@superadmin.com',
             'email_verified_at' => now(),
@@ -22,5 +22,7 @@ class SuperAdminSeeder extends Seeder
             'remember_token' => \Str::random(10),
             'employee_id' => Employee::first()->id,
         ]);
+
+        $superadmin->assignRole(config('filament-shield.super_admin.name'));
     }
 }

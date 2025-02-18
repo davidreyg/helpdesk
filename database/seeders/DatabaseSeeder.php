@@ -14,10 +14,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            RolesTableSeeder::class,
+            GiveBasicPermissionToRolesSeeder::class,
             CompanySeeder::class,
             CustomerSeeder::class,
             EmployeeSeeder::class,
             SuperAdminSeeder::class,
         ]);
+        \Artisan::call('shield:generate --all --ignore-existing-policies');
     }
 }

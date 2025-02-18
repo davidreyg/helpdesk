@@ -252,5 +252,12 @@
     "Currency": "Moneda",
     "Notes": "Notas",
     "Payment Type": "Forma de pago",
-    "Direct Cost": "Costo directo"
+    "Direct Cost": "Costo directo",
+    "Precision": "Precisión",
+    "Symbol": "Símbolo",
+    "Decimal Separator": "Separador de decimales",
+    "Thousand Separator": "Separador de miles",
+    "Symbol First": "Símbolo al inicio",
+    "Appearance": "Apariencia",
+    "Report": "Reportes"
 }

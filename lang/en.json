@@ -252,5 +252,12 @@
     "Currency": "Currency",
     "Notes": "Notes",
     "Payment Type": "Payment Type",
-    "Direct cost": "Direct cost"
+    "Direct cost": "Direct cost",
+    "Precision": "Precision",
+    "Symbol": "Symbol",
+    "Decimal Separator": "Decimal Separator",
+    "Thousand Separator": "Thousand Separator",
+    "Symbol First": "Symbol First",
+    "Appearance": "Appearance",
+    "Report": "Report"
 }

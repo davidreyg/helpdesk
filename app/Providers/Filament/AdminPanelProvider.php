@@ -2,7 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\ConfigureCurrentPanel;
 use Filament\Http\Middleware\Authenticate;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -32,9 +34,6 @@ class AdminPanelProvider extends PanelProvider
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->sidebarCollapsibleOnDesktop()
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->colors([
-                'primary' => Color::Amber,
-            ])
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->pages([
@@ -55,11 +54,27 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                ConfigureCurrentPanel::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
             ])
             ->plugins([
+                FilamentShieldPlugin::make()
+                    ->gridColumns([
+                        'default' => 2,
+                        'sm' => 1
+                    ])
+                    ->sectionColumnSpan(1)
+                    ->checkboxListColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                        'lg' => 3,
+                    ])
+                    ->resourceCheckboxListColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                    ]),
                 \Statikbe\FilamentTranslationManager\FilamentChainedTranslationManagerPlugin::make(),
             ]);
     }
