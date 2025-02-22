@@ -7,6 +7,7 @@ export default {
         "./resources/views/filament/**/*.blade.php",
         "./resources/views/infolists/**/*.blade.php",
         "./resources/views/components/forms/**/*.blade.php",
+        "./resources/views/components/pdf/**/*.blade.php",
         './vendor/filament/**/*.blade.php',
         "./vendor/statikbe/laravel-filament-chained-translation-manager/**/*.blade.php",
         "./vendor/awcodes/filament-table-repeater/resources/**/*.blade.php",

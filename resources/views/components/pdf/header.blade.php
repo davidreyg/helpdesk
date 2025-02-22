@@ -9,7 +9,7 @@
         /* display: flex; */
         /* justify-content: space-between; */
         /* align-items: center; */
-        margin: 0 5px 0 5px;
+        margin: 0 30px 0 30px;
         /* position: relative; */
         /* padding: 10px; */
         /* background-color: red; */
@@ -38,8 +38,8 @@
                 </td>
                 <td style="width: 350px">
                 </td>
-                <td class="text-left">
-                    <span style="font-size: 15px"> DIRIS SEDE ADMINISTRATIVA</span>
+                <td style="text-align: right">
+                    <span style="font-size: 15px"> Master Electronics S.A.C</span>
                 </td>
             </tr>
         </tbody>

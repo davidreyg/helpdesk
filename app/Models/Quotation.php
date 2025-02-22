@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\CurrencyEnum;
 use App\Enums\PaymentTypeEnum;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Quotation extends Model
@@ -15,6 +16,27 @@ class Quotation extends Model
         'payment_type',
         'customer_id',
     ];
+
+    protected function subTotal(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->quotationItems->sum(fn($item) => $item->total),
+        );
+    }
+
+    protected function igv(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->subTotal * 0.18
+        );
+    }
+
+    protected function total(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->subTotal + $this->igv
+        );
+    }
 
     protected function casts(): array
     {

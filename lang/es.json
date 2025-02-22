@@ -246,7 +246,7 @@
     "Priority": "Prioridad",
     "Description": "Descripción",
     "Customer": "Cliente",
-    "Quotation": "Cotizacion",
+    "Quotation": "Cotización",
     "Quantity": "Cantidad",
     "Unit": "Unidad",
     "Currency": "Moneda",
@@ -259,5 +259,6 @@
     "Thousand Separator": "Separador de miles",
     "Symbol First": "Símbolo al inicio",
     "Appearance": "Apariencia",
-    "Report": "Reportes"
+    "Report": "Reportes",
+    "Print": "Imprimir"
 }

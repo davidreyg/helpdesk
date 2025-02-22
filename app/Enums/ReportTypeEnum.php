@@ -6,7 +6,7 @@ use Filament\Support\Contracts\HasLabel;
 
 enum ReportTypeEnum: string implements HasLabel
 {
-    case COTIZACION = 'cotizacion-pdf';
+    case COTIZACION = 'quotation-pdf';
 
     public function getLabel(): ?string
     {
