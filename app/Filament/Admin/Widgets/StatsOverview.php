@@ -4,7 +4,7 @@ namespace App\Filament\Admin\Widgets;
 
 use App\Models\Company;
 use App\Models\Employee;
-use App\Models\Requirement;
+use App\Models\Incident;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -24,7 +24,7 @@ class StatsOverview extends BaseWidget
                 ->description('32k increase')
                 ->color('success')
                 ->descriptionIcon('heroicon-m-arrow-trending-up'),
-            Stat::make(__('Requirement'), Requirement::count())
+            Stat::make(__('Incident'), Incident::count())
                 ->description('32k increase')
                 ->color('success')
                 ->descriptionIcon('heroicon-m-arrow-trending-up'),

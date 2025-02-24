@@ -4,9 +4,9 @@ namespace App\Filament\Admin\Resources;
 
 use App\Enums\AttentionTypeEnum;
 use App\Enums\PriorityEnum;
-use App\Filament\Admin\Resources\RequirementResource\Pages;
-use App\Filament\Admin\Resources\RequirementResource\RelationManagers;
-use App\Models\Requirement;
+use App\Filament\Admin\Resources\IncidentResource\Pages;
+use App\Filament\Admin\Resources\IncidentResource\RelationManagers;
+use App\Models\Incident;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -16,15 +16,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class RequirementResource extends Resource
+class IncidentResource extends Resource
 {
-    protected static ?string $model = Requirement::class;
+    protected static ?string $model = Incident::class;
 
     protected static ?string $navigationIcon = 'tabler-clipboard-text';
 
     public static function getModelLabel(): string
     {
-        return __('Requirement');
+        return __('Incident');
     }
 
     public static function form(Form $form): Form
@@ -46,8 +46,8 @@ class RequirementResource extends Resource
                         }
                     })
                     ->maxLength(100),
-                Forms\Components\TextInput::make('requirement_type')
-                    ->label(__('Requirement Type'))
+                Forms\Components\TextInput::make('incident_type')
+                    ->label(__('Incident Type'))
                     ->required(),
                 Forms\Components\Select::make('priority')
                     ->label(__('Priority'))
@@ -70,8 +70,8 @@ class RequirementResource extends Resource
                 Tables\Columns\TextColumn::make('attention_type')
                     ->label(__('Attention Type'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('requirement_type')
-                    ->label(__('Requirement Type'))
+                Tables\Columns\TextColumn::make('Incident_type')
+                    ->label(__('Incident Type'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('priority')
                     ->label(__('Priority'))
@@ -110,9 +110,9 @@ class RequirementResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRequirements::route('/'),
-            'create' => Pages\CreateRequirement::route('/create'),
-            'edit' => Pages\EditRequirement::route('/{record}/edit'),
+            'index' => Pages\ListIcidents::route('/'),
+            'create' => Pages\CreateIncident::route('/create'),
+            'edit' => Pages\EditIncident::route('/{record}/edit'),
         ];
     }
 }

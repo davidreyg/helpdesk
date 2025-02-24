@@ -10,11 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('requirements', function (Blueprint $table) {
+        Schema::create('incidents', function (Blueprint $table) {
             $table->id();
             $table->string('code', 100);
             $table->string('attention_type', 100);
-            $table->string('requirement_type', 100);
+            $table->string('incident_type', 100);
             $table->string('priority', 100);
             $table->text('description');
             $table->timestamps();
@@ -26,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('requirements');
+        Schema::dropIfExists('incidents');
     }
 };
