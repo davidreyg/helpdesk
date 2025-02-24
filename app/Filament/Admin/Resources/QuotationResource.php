@@ -48,6 +48,8 @@ class QuotationResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('code')
                     ->label(__('Code'))
+                    ->default(fn() => 'COT-' . str_pad(Quotation::generateNextNumber(), 7, '0', STR_PAD_LEFT))
+                    ->disabled()
                     ->required()
                     ->maxLength(100),
                 Forms\Components\Select::make('currency')

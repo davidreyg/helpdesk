@@ -13,7 +13,8 @@ return new class extends Migration {
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained();
-            $table->string('code', 100);
+            // $table->string('code', 100);
+            $table->unsignedBigInteger('number')->unique();
             $table->string('payment_type', 100);
             $table->string('currency', 100);
             $table->text('notes')->nullable();

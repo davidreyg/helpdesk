@@ -10,12 +10,25 @@ use Illuminate\Database\Eloquent\Model;
 class Quotation extends Model
 {
     protected $fillable = [
-        'code',
+        // 'code',
+        'number',
         'currency',
         'notes',
         'payment_type',
         'customer_id',
     ];
+
+    public static function generateNextNumber(): int
+    {
+        return (static::max('number') ?? 0) + 1;
+    }
+
+    protected function code(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => 'COT-' . str_pad($this->number, 7, '0', STR_PAD_LEFT)
+        );
+    }
 
     protected function subTotal(): Attribute
     {
@@ -54,5 +67,14 @@ class Quotation extends Model
     public function quotationItems()
     {
         return $this->hasMany(QuotationItem::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($quotation) {
+            $quotation->number = static::generateNextNumber();
+        });
     }
 }

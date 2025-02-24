@@ -13,6 +13,13 @@ class EditQuotation extends EditRecord
 {
     protected static string $resource = QuotationResource::class;
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['code'] = $this->getRecord()->code;
+
+        return $data;
+    }
+
     protected function getHeaderActions(): array
     {
         return [
