@@ -26,7 +26,8 @@
 				"ahinkle.laravel-model-snippets",
 				"shufo.vscode-blade-formatter",
 				"onecentlin.laravel5-snippets",
-				"pcbowers.alpine-intellisense"
+				"pcbowers.alpine-intellisense",
+				"damms005.devdb"
 			],
 			"settings": {
 				"editor.formatOnSave": true
