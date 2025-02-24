@@ -70,14 +70,17 @@ class IncidentResource extends Resource
                 Tables\Columns\TextColumn::make('attention_type')
                     ->label(__('Attention Type'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('Incident_type')
+                Tables\Columns\TextColumn::make('incident_type')
                     ->label(__('Incident Type'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('priority')
                     ->label(__('Priority'))
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('description')
-                //     ->label(__('Description')),
+                Tables\Columns\TextColumn::make('status')
+                    ->label(__('validation.attributes.status'))
+                    ->formatStateUsing(fn($state) => $state->label())
+                    ->color(fn($state) => $state->color())
+                    ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -92,6 +95,7 @@ class IncidentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

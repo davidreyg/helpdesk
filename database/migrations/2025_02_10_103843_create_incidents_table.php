@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('incident_type', 100);
             $table->string('priority', 100);
             $table->text('description');
+            $table->string('status', 100);
             $table->timestamps();
         });
     }
