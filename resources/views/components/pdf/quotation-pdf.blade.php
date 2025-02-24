@@ -3,6 +3,7 @@
     <div class="flex justify-center items-center">
         <div class="text-center max-w-2xl">
             <span class="text-3xl font-bold uppercase text-red-800">{{ __('Quotation') }}</span>
+            <p>{{ $quotation->code }}</p>
         </div>
 
     </div>
@@ -68,5 +69,33 @@
                 <!-- Agrega más filas según sea necesario -->
             </tbody>
         </table>
+
+    </div>
+
+    {{-- FOOTER --}}
+    <div class="grid grid-cols-1 gap-4 mt-8">
+        <p class="font-bold italic text-sm">CONDICIONES GENERALES:</p>
+        <ol class="list-disc list-inside">
+
+            <li class="italic text-sm">Los precios estan expresados en <span
+                    class="font-bold text-red-500">{{ $quotation->currency->name }}</span>
+                Para pagos en <span class="font-bold text-red-500">{{ $quotation->currency->getOpposite() }}</span>
+                se considerara tasa de cambio
+                oficial</li>
+            <li class="italic text-sm">Validez de la oferta: 10 Días</li>
+            <li class="italic text-sm">Forma de pago: contado </li>
+            <li class="italic text-sm">Cuentas Bancarias:
+                <!-- Lista ordenada anidada (nivel 1.1) -->
+                <ol class="list-decimal ml-8">
+                    <li class="italic text-sm">
+                        Scotiabank DOLARES N° 280-0008873 CCI: 009-280-212800008873-99
+                    </li>
+                    <li class="italic text-sm">
+                        Scotiabank SOLES N° 152-0030634 CCI: 009-048-201520030634-04
+                    </li>
+                </ol>
+            </li>
+            <li class="italic text-sm">Tiempo de Entrega: 2 días despues de la girada la orden de compra</li>
+        </ol>
     </div>
 </div>

@@ -13,4 +13,12 @@ enum CurrencyEnum: string implements HasLabel
     {
         return $this->name;
     }
+
+    public function getOpposite()
+    {
+        return match ($this) {
+            self::DOLARES => self::SOLES->name,
+            self::SOLES => self::DOLARES->name,
+        };
+    }
 }

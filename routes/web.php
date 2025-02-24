@@ -11,6 +11,6 @@ Route::get('/', function () {
 
 Route::get('/pdf/quotations/{quotation}', function (Quotation $quotation) {
     return PdfGenerator::make()
-        ->filename('cotizacion')
+        ->filename($quotation->code)
         ->handle(ReportTypeEnum::COTIZACION, $quotation);
 })->middleware([])->name('quotation-pdf');
