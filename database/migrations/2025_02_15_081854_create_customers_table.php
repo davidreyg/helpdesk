@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('document_type', 100);
-            $table->integer('document_number')->unique()->unsigned();
+            $table->bigInteger('document_number')->unique()->unsigned();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
