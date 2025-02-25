@@ -246,7 +246,7 @@
     "Priority": "Prioridad",
     "Description": "Descripción",
     "Customer": "Cliente",
-    "Quotation": "Cotización",
+    "Quotation|Quotations": "Cotización|Cotizaciones",
     "Quantity": "Cantidad",
     "Unit": "Unidad",
     "Currency": "Moneda",

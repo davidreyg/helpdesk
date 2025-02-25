@@ -31,11 +31,16 @@ class QuotationResource extends Resource
 {
     protected static ?string $model = Quotation::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'tabler-businessplan';
 
     public static function getModelLabel(): string
     {
-        return __('Quotation');
+        return trans_choice('Quotation|Quotations', 1);
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return trans_choice('Quotation|Quotations', 2);
     }
 
     public static function form(Form $form): Form

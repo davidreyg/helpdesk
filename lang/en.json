@@ -246,7 +246,7 @@
     "Priority": "Priority",
     "Description": "Description",
     "Customer": "Customer",
-    "Quotation": "Quotation",
+    "Quotation|Quotations": "Quotation|Quotations",
     "Quantity": "Quantity",
     "Unit": "Unit",
     "Currency": "Currency",
