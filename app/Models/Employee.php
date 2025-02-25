@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\DocumentTypeEnum;
 use App\Enums\GenderEnum;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,11 +31,6 @@ class Employee extends Model
         'address',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -43,5 +39,12 @@ class Employee extends Model
             'document_type' => DocumentTypeEnum::class,
             'gender' => GenderEnum::class,
         ];
+    }
+
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => "$this->names $this->paternal_surname $this->maternal_surname"
+        );
     }
 }
