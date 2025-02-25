@@ -76,6 +76,7 @@ class ManageGeneral extends SettingsPage
                                     ->directory('sites')
                                     ->visibility('public')
                                     ->moveFiles()
+                                    ->preserveFilenames()
                                     ->required()
                                     ->columnSpan(2),
                             ])
@@ -86,6 +87,7 @@ class ManageGeneral extends SettingsPage
                                 ->directory('sites')
                                 ->visibility('public')
                                 ->moveFiles()
+                                ->preserveFilenames()
                                 ->acceptedFileTypes(['image/x-icon', 'image/vnd.microsoft.icon'])
                                 ->required(),
                         ])->columns(4),
