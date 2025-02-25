@@ -17,6 +17,7 @@ abstract class IncidentState extends State
         return parent::config()
             ->default(Pending::class)
             ->allowTransition(Pending::class, Solved::class)
+            ->allowTransition(Pending::class, Rejected::class)
         ;
     }
 
