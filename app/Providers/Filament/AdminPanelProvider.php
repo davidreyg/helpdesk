@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Http\Middleware\ConfigureCurrentPanel;
 use App\Http\Middleware\ForceHttps;
 use App\Livewire\MyProfileExtended;
+use DutchCodingCompany\FilamentDeveloperLogins\FilamentDeveloperLoginsPlugin;
 use Filament\Http\Middleware\Authenticate;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -93,6 +94,11 @@ class AdminPanelProvider extends PanelProvider
                     ->myProfileComponents([
                         'personal_info' => MyProfileExtended::class,
                     ]),
+                FilamentDeveloperLoginsPlugin::make()
+                    ->enabled(app()->isLocal())
+                    ->users([
+                        'SuperAdmin' => 'fany@superadmin.com',
+                    ])
             ]);
     }
 }

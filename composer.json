@@ -15,6 +15,7 @@
         "bezhansalleh/filament-language-switch": "^3.1",
         "bezhansalleh/filament-shield": "^3.3",
         "codeat3/blade-fluentui-system-icons": "^1.33",
+        "dutchcodingcompany/filament-developer-logins": "^1.7",
         "filament/filament": "^3.2",
         "filament/spatie-laravel-media-library-plugin": "^3.2",
         "filament/spatie-laravel-settings-plugin": "^3.2",
