@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Http\Middleware\ConfigureCurrentPanel;
 use App\Http\Middleware\ForceHttps;
+use App\Livewire\MyProfileExtended;
 use Filament\Http\Middleware\Authenticate;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -81,6 +82,17 @@ class AdminPanelProvider extends PanelProvider
                         'sm' => 2,
                     ]),
                 \Statikbe\FilamentTranslationManager\FilamentChainedTranslationManagerPlugin::make(),
+                \Jeffgreco13\FilamentBreezy\BreezyCore::make()
+                    ->myProfile(
+                        shouldRegisterUserMenu: true,
+                        shouldRegisterNavigation: false,
+                        navigationGroup: 'Settings',
+                        hasAvatars: true,
+                        slug: 'my-profile'
+                    )
+                    ->myProfileComponents([
+                        'personal_info' => MyProfileExtended::class,
+                    ]),
             ]);
     }
 }

@@ -260,5 +260,9 @@
     "Symbol First": "Símbolo al inicio",
     "Appearance": "Apariencia",
     "Report": "Reportes",
-    "Print": "Imprimir"
+    "Print": "Print",
+    "Created at": "Creado en",
+    "Updated at": "Última modificación en",
+    "Resend verification": "Reenviar verificación",
+    "Email verified at": "Correo electrónico verificado en"
 }
