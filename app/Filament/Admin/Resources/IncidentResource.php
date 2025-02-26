@@ -7,6 +7,8 @@ use App\Enums\PriorityEnum;
 use App\Filament\Admin\Resources\IncidentResource\Pages;
 use App\Filament\Admin\Resources\IncidentResource\RelationManagers;
 use App\Models\Incident;
+use App\States\Incident\Rejected;
+use App\States\Incident\Solved;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -79,6 +81,7 @@ class IncidentResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label(__('validation.attributes.status'))
                     ->formatStateUsing(fn($state) => $state->label())
+                    ->icon(fn($state) => $state->icon())
                     ->color(fn($state) => $state->color())
                     ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -94,6 +97,23 @@ class IncidentResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('solve')
+                        ->label(__('Solve'))
+                        ->visible(fn(Incident $record) => $record->status->canTransitionTo(Solved::class))
+                        ->icon(fn(Incident $record) => new Solved($record)->icon())
+                        ->color(fn(Incident $record) => new Solved($record)->color())
+                        ->action(fn(Incident $record) => $record->status->transitionTo(Solved::class)),
+                    Tables\Actions\Action::make('reject')
+                        ->label(__('Reject'))
+                        ->visible(fn(Incident $record) => $record->status->canTransitionTo(Rejected::class))
+                        ->icon(fn(Incident $record) => new Rejected($record)->icon())
+                        ->color(fn(Incident $record) => new Rejected($record)->color())
+                        ->action(fn(Incident $record) => $record->status->transitionTo(Rejected::class)),
+                ])
+                    ->outlined()
+                    ->icon('tabler-rotate-clockwise-2')
+                    ->hiddenLabel(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

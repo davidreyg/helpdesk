@@ -10,6 +10,7 @@ use Spatie\ModelStates\StateConfig;
 abstract class IncidentState extends State
 {
     abstract public function color(): string;
+    abstract public function icon(): string;
     abstract public function label(): string;
 
     public static function config(): StateConfig

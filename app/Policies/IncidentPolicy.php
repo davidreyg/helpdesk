@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Incident;
+use App\States\Incident\Pending;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class IncidentPolicy
@@ -39,6 +40,10 @@ class IncidentPolicy
      */
     public function update(User $user, Incident $incident): bool
     {
+        if (!$incident->status->equals(Pending::class)) {
+            return false;
+        }
+
         return $user->can('update_incident');
     }
 
@@ -47,6 +52,9 @@ class IncidentPolicy
      */
     public function delete(User $user, Incident $incident): bool
     {
+        if (!$incident->status->equals(Pending::class)) {
+            return false;
+        }
         return $user->can('delete_incident');
     }
 
