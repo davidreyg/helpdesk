@@ -10,6 +10,7 @@ use App\Models\Incident;
 use App\States\Incident\Rejected;
 use App\States\Incident\Solved;
 use Filament\Forms;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
@@ -48,8 +49,9 @@ class IncidentResource extends Resource
                         }
                     })
                     ->maxLength(100),
-                Forms\Components\TextInput::make('incident_type')
-                    ->label(__('Incident Type'))
+                Forms\Components\Select::make('company_id')
+                    ->label(__('Company'))
+                    ->relationship('company', 'name')
                     ->required(),
                 Forms\Components\Select::make('priority')
                     ->label(__('Priority'))
@@ -58,6 +60,11 @@ class IncidentResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->label(__('Description'))
                     ->required()
+                    ->columnSpanFull(),
+                SpatieMediaLibraryFileUpload::make('media')
+                    ->multiple()
+                    ->maxFiles(3)
+                    ->collection('files')
                     ->columnSpanFull(),
             ]);
     }
@@ -72,8 +79,8 @@ class IncidentResource extends Resource
                 Tables\Columns\TextColumn::make('attention_type')
                     ->label(__('Attention Type'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('incident_type')
-                    ->label(__('Incident Type'))
+                Tables\Columns\TextColumn::make('company,name')
+                    ->label(__('Company'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('priority')
                     ->label(__('Priority'))
