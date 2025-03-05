@@ -79,7 +79,7 @@ class IncidentResource extends Resource
                 Tables\Columns\TextColumn::make('attention_type')
                     ->label(__('Attention Type'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('company,name')
+                Tables\Columns\TextColumn::make('company.name')
                     ->label(__('Company'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('priority')

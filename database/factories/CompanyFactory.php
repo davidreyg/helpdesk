@@ -17,7 +17,12 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->company()
+            'name' => fake()->company(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'phone' => $this->faker->numerify('9########'), // Assuming a 9-digit phone number
+            'document_number' => $this->faker->numerify('##############'), // 8-digit document number
+            'address' => $this->faker->address(),
+            'contact' => $this->faker->name(),
         ];
     }
 }

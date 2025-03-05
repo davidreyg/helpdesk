@@ -106,8 +106,8 @@ class EmployeeResource extends Resource
                 Tables\Columns\TextColumn::make('gender')
                     ->label(__('Gender'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('address')
-                    ->label(__('Address'))
+                Tables\Columns\TextColumn::make('company.name')
+                    ->label(__('Company'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

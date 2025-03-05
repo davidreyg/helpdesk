@@ -29,6 +29,7 @@ class Employee extends Model
         'document_number',
         'gender',
         'address',
+        'company_id',
     ];
 
     protected function casts(): array
@@ -46,5 +47,10 @@ class Employee extends Model
         return Attribute::make(
             get: fn() => "$this->names $this->paternal_surname $this->maternal_surname"
         );
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 }

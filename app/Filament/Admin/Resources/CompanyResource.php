@@ -28,10 +28,29 @@ class CompanyResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('document_number')
+                    ->label(__('Document Number'))
+                    ->required()
+                    ->numeric(),
                 Forms\Components\TextInput::make('name')
                     ->label(__('Name'))
                     ->required()
                     ->maxLength(100),
+                Forms\Components\TextInput::make('email')
+                    ->label(__('Email'))
+                    ->email()
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('phone')
+                    ->label(__('Phone'))
+                    ->tel()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('address')
+                    ->label(__('Address'))
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('contact')
+                    ->label(__('Contact'))
+                    ->maxLength(255),
             ]);
     }
 
@@ -39,8 +58,20 @@ class CompanyResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('document_number')
+                    ->label(__('Document Number'))
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Name'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->label(__('Email'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->label(__('Phone'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('address')
+                    ->label(__('Address'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

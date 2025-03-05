@@ -39,7 +39,7 @@
                 <td style="width: 350px">
                 </td>
                 <td style="text-align: right">
-                    <span style="font-size: 15px"> Master Electronics S.A.C</span>
+                    <span style="font-size: 15px"> Master Electronics Perú S.A.C</span>
                 </td>
             </tr>
         </tbody>

@@ -2,7 +2,7 @@
     {{-- TITLE --}}
     <div class="flex justify-center items-center">
         <div class="text-center max-w-2xl">
-            <span class="text-3xl font-bold uppercase text-red-800">{{ __('Quotation') }}</span>
+            <span class="text-3xl font-bold uppercase text-red-800">{{ trans_choice('Quotation|Quotations', 1) }}</span>
             <p>{{ $quotation->code }}</p>
         </div>
 

@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->integer('document_number')->unique()->unsigned();
             $table->string('gender', 100);
             $table->string('address', 100)->nullable();
+            $table->foreignId('company_id')->constrained();
             $table->timestamps();
         });
     }
