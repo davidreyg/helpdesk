@@ -20,7 +20,7 @@ class CreateUser extends CreateRecord
     }
 
     // DISABLE EMAIL VERIFICATION
-    protected function afterCreate2(): void
+    protected function afterCreate(): void
     {
         $user = $this->record;
         $settings = app(MailSettings::class);
