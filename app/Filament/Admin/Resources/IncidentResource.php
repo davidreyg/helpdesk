@@ -34,6 +34,9 @@ class IncidentResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\DatePicker::make('attention_date')
+                    ->label(__('Attention Date'))
+                    ->default(now()),
                 Forms\Components\Select::make('attention_type')
                     ->label(__('Attention Type'))
                     ->required()
@@ -73,6 +76,9 @@ class IncidentResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('attention_date')
+                    ->label(__('Attention Date'))
+                    ->date(),
                 Tables\Columns\TextColumn::make('code')
                     ->label(__('Code'))
                     ->searchable(),

@@ -15,12 +15,21 @@ class Incident extends Model implements HasMedia
     use HasFactory;
     use HasStates, InteractsWithMedia;
 
-    protected $fillable = ['code', 'attention_type', 'company_id', 'priority', 'description', 'status'];
+    protected $fillable = [
+        'code',
+        'attention_type',
+        'attention_date',
+        'company_id',
+        'priority',
+        'description',
+        'status'
+    ];
 
     protected function casts(): array
     {
         return [
             'status' => IncidentState::class,
+            'attention_date' => 'date',
         ];
     }
 

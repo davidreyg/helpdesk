@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('code', 100);
             $table->string('attention_type', 100);
+            $table->date('attention_date');
             $table->foreignId('company_id')->constrained()->restrictOnDelete();
             $table->string('priority', 100);
             $table->text('description');
