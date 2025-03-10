@@ -12,19 +12,19 @@
     <div class="grid grid-cols-2 mt-6 justify-start items-center gap-2">
         <div class="">
             <span class="font-bold">Cliente:</span>
-            <span>{{ $quotation->customer->name }}</span>
+            <span>{{ $quotation->company->name }}</span>
         </div>
         <div class="">
-            <span class="font-bold">RUC / DNI:</span>
-            <span>{{ $quotation->customer->document_number }}</span>
+            <span class="font-bold">RUC:</span>
+            <span>{{ $quotation->company->document_number }}</span>
         </div>
         <div class="">
             <span class="font-bold">Contacto:</span>
-            <span>{{ $quotation->customer->phone }} / {{ $quotation->customer->email }}</span>
+            <span>{{ $quotation->company->phone }} / {{ $quotation->company->email }}</span>
         </div>
         <div class="">
             <span class="font-bold">{{ __('Address') }}:</span>
-            <span>{{ $quotation->customer->address }}</span>
+            <span>{{ $quotation->company->address }}</span>
         </div>
         <div class="">
             <span class="font-bold">{{ __('validation.attributes.created_at') }}:</span>
