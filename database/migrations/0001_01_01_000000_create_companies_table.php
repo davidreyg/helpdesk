@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name', 100);
             $table->bigInteger('document_number')->unique()->unsigned();
-            $table->string('email')->unique();
+            $table->string('email')->nullable()->unique();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('contact')->nullable();
