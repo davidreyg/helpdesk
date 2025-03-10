@@ -15,7 +15,7 @@ class Quotation extends Model
         'currency',
         'notes',
         'payment_type',
-        'customer_id',
+        'company_id',
     ];
 
     public static function generateNextNumber(): int
@@ -59,9 +59,9 @@ class Quotation extends Model
         ];
     }
 
-    public function customer()
+    public function company()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function quotationItems()

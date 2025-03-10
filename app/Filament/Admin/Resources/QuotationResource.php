@@ -47,9 +47,10 @@ class QuotationResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('customer_id')
-                    ->label(__('Customer'))
-                    ->relationship('customer', 'name')
+                Forms\Components\Select::make('company_id')
+                    ->label(__('Company'))
+                    ->searchable()
+                    ->relationship('company', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('code')
                     ->label(__('Code'))
@@ -159,8 +160,8 @@ class QuotationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('customer.name')
-                    ->label(__('Customer'))
+                Tables\Columns\TextColumn::make('company.name')
+                    ->label(__('Company'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('code')
                     ->label(__('Code'))
