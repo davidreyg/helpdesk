@@ -74,6 +74,7 @@ class QuotationResource extends Resource
                             ->hiddenLabel()
                             ->relationship('quotationItems')
                             ->addActionLabel(__('Add'))
+                            ->reorderable()
                             ->afterStateUpdated(function ($livewire) {
                                 // Aquí detectamos si se eliminó un ítem
                                 self::updateQuotationTotals($livewire);
@@ -213,7 +214,7 @@ class QuotationResource extends Resource
         // Retrieve the state path of the form. Most likely it's `data` but it could be something else.
         $currency = $get('../../currency') ?? 'PEN';
         $qty = floatval($get('quantity'));
-        $price = floatval($get('price'));
+        $price = $get('price');
         $priceInt = CurrencyConverter::prepareForAccessor($price, $currency);
 
 
