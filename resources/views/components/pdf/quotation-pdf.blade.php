@@ -37,9 +37,9 @@
         <table class="w-full table-auto">
             <thead class="bg-gray-200 text-gray-700 divide-y divide-gray-300">
                 <tr>
-                    <th class="px-4 py-2 text-center font-bold w-4">Cantidad</th>
+                    <th class="px-4 py-2 text-center font-bold">Cantidad</th>
                     <th class="px-4 py-2 text-center font-bold">Descripcion</th>
-                    <th class="px-4 py-2 text-center font-bold">Unidad</th>
+                    <th class="px-4 py-2 text-center font-bold max-w-24">Unidad</th>
                     <th class="px-4 py-2 text-center font-bold">P. Unitario</th>
                     <th class="px-4 py-2 text-center font-bold">Total</th>
                 </tr>
@@ -49,7 +49,7 @@
                     <tr>
                         <td class="px-4 py-2 text-center">{{ $item->quantity }}</td>
                         <td class="px-4 py-2 text-center">{{ $item->description }}</td>
-                        <td class="px-4 py-2 text-center">{{ $item->unit }}</td>
+                        <td class="px-4 py-2 text-center max-w-24">{{ $item->unit }}</td>
                         <td class="px-4 py-2 text-center">{{ $item->price }}</td>
                         <td class="px-4 py-2 text-center">@money($item->total, $quotation->currency->value)</td>
                     </tr>
@@ -72,6 +72,13 @@
 
     </div>
 
+    <div class="mt-6">
+        <p class="font-bold italic">{{ __('Notes') }}:</p>
+        <p class="text-ellipsis">
+            {{ $quotation->notes }}
+        </p>
+    </div>
+
     {{-- FOOTER --}}
     <div class="grid grid-cols-1 gap-4 mt-8">
         <p class="font-bold italic text-sm">CONDICIONES GENERALES:</p>
@@ -92,6 +99,9 @@
                     </li>
                     <li class="italic text-sm">
                         Scotiabank SOLES N° 152-0030634 CCI: 009-048-201520030634-04
+                    </li>
+                    <li class="italic text-sm">
+                        BBVA SOLES N° 0011-0370-4201000434-27 CCI: 011-370-000100043427-42
                     </li>
                 </ol>
             </li>
