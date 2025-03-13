@@ -21,6 +21,8 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -165,27 +167,32 @@ class QuotationResource extends Resource
     {
         return $table
             ->columns([
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('Attention Date'))
+                    ->date()
+                    ->wrap()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('company.name')
                     ->label(__('Company'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('code')
-                    ->label(__('Code'))
-                    ->searchable(),
+                    ->label(__('Code')),
                 Tables\Columns\TextColumn::make('currency')
-                    ->label(__('Currency'))
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label(__('Currency')),
+                Tables\Columns\TextColumn::make('total')
+                    ->formatStateUsing(fn(string $state, Quotation $record) => money($state, $record->currency->value)),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                SelectFilter::make('company')
+                    ->label(__('Company'))
+                    ->relationship('company', 'name')
+                    ->searchable()
+            ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
