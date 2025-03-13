@@ -68,6 +68,10 @@ class QuotationResource extends Resource
                     ->label(__('Payment Type'))
                     ->required()
                     ->options(PaymentTypeEnum::class),
+                Forms\Components\TextInput::make('requester_name')
+                    ->label(__('Requester Name'))
+                    ->required()
+                    ->maxLength(100),
                 Section::make('Items')
                     ->schema([
                         TableRepeater::make('items')

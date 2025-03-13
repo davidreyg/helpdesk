@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Quotation extends Model
 {
     protected $fillable = [
-        // 'code',
+        'requester_name',
         'number',
         'currency',
         'notes',
