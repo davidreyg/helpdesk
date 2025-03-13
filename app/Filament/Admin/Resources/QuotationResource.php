@@ -175,6 +175,7 @@ class QuotationResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('company.name')
                     ->label(__('Company'))
+                    ->wrap()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('code')
                     ->label(__('Code')),
