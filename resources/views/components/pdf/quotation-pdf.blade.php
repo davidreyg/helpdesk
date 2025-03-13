@@ -32,6 +32,9 @@
         </div>
     </div>
 
+    @php
+        $symbol = money('3', 'PEN')->getCurrency()->getSymbol();
+    @endphp
     {{-- ITEMS --}}
     <div class="overflow-hidden border border-gray-300 rounded-lg mt-6">
         <table class="w-full table-auto">
@@ -40,18 +43,22 @@
                     <th class="px-4 py-2 text-center font-bold">Cantidad</th>
                     <th class="px-4 py-2 text-center font-bold">Descripcion</th>
                     <th class="px-4 py-2 text-center font-bold max-w-24">Unidad</th>
-                    <th class="px-4 py-2 text-center font-bold">P. Unitario</th>
-                    <th class="px-4 py-2 text-center font-bold">Total</th>
+                    <th class="px-4 py-2 text-center font-bold">P. Unitario
+                        ({{ $symbol }})</th>
+                    <th class="px-4 py-2 text-center font-bold">Total ({{ $symbol }})</th>
                 </tr>
             </thead>
             <tbody class="">
                 @foreach ($quotation->quotationItems as $item)
                     <tr>
                         <td class="px-4 py-2 text-center">{{ $item->quantity }}</td>
-                        <td class="px-4 py-2 text-center">{{ $item->description }}</td>
-                        <td class="px-4 py-2 text-center max-w-24">{{ $item->unit }}</td>
+                        <td class="px-4 py-2 text-center max-w-72">{{ $item->description }}</td>
+                        <td class="px-4 py-2 text-center max-w-28">{{ $item->unit }}</td>
                         <td class="px-4 py-2 text-center">{{ $item->price }}</td>
-                        <td class="px-4 py-2 text-center">@money($item->total, $quotation->currency->value)</td>
+                        @php
+                            $simpleTotal = money($item->total, $quotation->currency->value)->formatSimple();
+                        @endphp
+                        <td class="px-4 py-2 text-center">{{ $simpleTotal }}</td>
                     </tr>
                 @endforeach
                 <tr>
