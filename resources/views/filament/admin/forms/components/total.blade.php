@@ -2,6 +2,7 @@
     $subTotal = $getState() ?? 0;
     $igv = $subTotal * 0.18;
     $total = $subTotal + $igv;
+    $currency = $this->data['currency'] ?? 'PEN';
 @endphp
 
 <div class="w-full">
@@ -25,7 +26,7 @@
                             </x-filament-tables::cell>
                             <x-filament-tables::cell>
                                 <div class="px-3 py-4 text-sm leading-6 text-gray-950 dark:text-white">
-                                    @money($subTotal)
+                                    @money($subTotal, $currency)
                                 </div>
                             </x-filament-tables::cell>
                         </x-filament-tables::row>
@@ -37,7 +38,7 @@
                             </x-filament-tables::cell>
                             <x-filament-tables::cell>
                                 <div class="px-3 py-4 text-sm leading-6 text-gray-950 dark:text-white">
-                                    @money($igv)
+                                    @money($igv, $currency)
                                 </div>
                             </x-filament-tables::cell>
                         </x-filament-tables::row>
@@ -49,7 +50,7 @@
                             </x-filament-tables::cell>
                             <x-filament-tables::cell>
                                 <div class="px-3 py-4 text-sm leading-6 text-gray-950 dark:text-white">
-                                    @money($total)
+                                    @money($total, $currency)
                                 </div>
                             </x-filament-tables::cell>
                         </x-filament-tables::row>
