@@ -74,13 +74,16 @@ class QuotationResource extends Resource
                     ->label(__('Requester Name'))
                     ->required()
                     ->maxLength(100),
+                Forms\Components\TextInput::make('project')
+                    ->label(__('Project'))
+                    ->required()
+                    ->maxLength(100),
                 Section::make('Items')
                     ->schema([
                         TableRepeater::make('items')
                             ->hiddenLabel()
                             ->relationship('quotationItems')
                             ->addActionLabel(__('Add'))
-                            ->reorderable()
                             ->afterStateUpdated(function ($livewire) {
                                 // Aquí detectamos si se eliminó un ítem
                                 self::updateQuotationTotals($livewire);
@@ -90,7 +93,11 @@ class QuotationResource extends Resource
                                     ->label(__('Quantity'))
                                     ->width('80px'),
                                 Header::make('Desc')
+                                    ->label(__('Product')),
+                                Header::make('Unit')
                                     ->label(__('Description')),
+                                Header::make('Unit')
+                                    ->label(__('Brand')),
                                 Header::make('Unit')
                                     ->label(__('Unit'))
                                     ->width('150px'),
@@ -119,9 +126,15 @@ class QuotationResource extends Resource
                                         self::updateItemTotals($get, $set, $livewire);
                                         self::updateQuotationTotals($livewire);
                                     }),
+                                TextInput::make('product')
+                                    ->required()
+                                    ->maxLength(100),
                                 TextInput::make('description')
                                     ->required()
                                     ->maxLength(200),
+                                TextInput::make('brand')
+                                    ->required()
+                                    ->maxLength(100),
                                 TextInput::make('unit')
                                     ->required()
                                     ->maxLength(50),

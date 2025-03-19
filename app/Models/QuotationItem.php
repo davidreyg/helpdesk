@@ -14,6 +14,8 @@ class QuotationItem extends Pivot
         'description',
         'unit',
         'price',
+        'product',
+        'brand',
     ];
 
     public function quotation()

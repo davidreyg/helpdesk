@@ -30,48 +30,55 @@
             <span class="font-bold">{{ __('validation.attributes.created_at') }}:</span>
             <span>{{ $quotation->created_at->format('Y-m-d') }}</span>
         </div>
+        <div class="">
+            <span class="font-bold">{{ __('Project') }}:</span>
+            <span>{{ $quotation->project }}</span>
+        </div>
     </div>
 
     @php
-        $symbol = money('3', 'PEN')->getCurrency()->getSymbol();
+        $symbol = money('3', $quotation->currency->value)->getCurrency()->getSymbol();
     @endphp
     {{-- ITEMS --}}
-    <div class="overflow-hidden border border-gray-300 rounded-lg mt-6">
+    <div class="overflow-hidden border border-gray-300 rounded-lg mt-6 text-xs">
         <table class="w-full table-auto">
             <thead class="bg-gray-200 text-gray-700 divide-y divide-gray-300">
                 <tr>
-                    <th class="px-4 py-2 text-center font-bold">Cantidad</th>
-                    <th class="px-4 py-2 text-center font-bold">Descripcion</th>
-                    <th class="px-4 py-2 text-center font-bold max-w-24">Unidad</th>
-                    <th class="px-4 py-2 text-center font-bold">P. Unitario
-                        ({{ $symbol }})</th>
-                    <th class="px-4 py-2 text-center font-bold">Total ({{ $symbol }})</th>
+                    <th class="px-2 py-2 text-center font-bold">Cantidad</th>
+                    <th class="px-2 py-2 text-center font-bold">Producto</th>
+                    <th class="px-2 py-2 text-center font-bold">Descripcion</th>
+                    <th class="px-2 py-2 text-center font-bold">Marca</th>
+                    <th class="px-2 py-2 text-center font-bold max-w-24">Unidad</th>
+                    <th class="px-2 py-2 text-center font-bold">PU ({{ $symbol }})</th>
+                    <th class="px-2 py-2 text-center font-bold">Total ({{ $symbol }})</th>
                 </tr>
             </thead>
             <tbody class="">
                 @foreach ($quotation->quotationItems as $item)
                     <tr>
-                        <td class="px-4 py-2 text-center">{{ $item->quantity }}</td>
-                        <td class="px-4 py-2 text-center max-w-72">{{ $item->description }}</td>
-                        <td class="px-4 py-2 text-center max-w-28">{{ $item->unit }}</td>
-                        <td class="px-4 py-2 text-center">{{ $item->price }}</td>
+                        <td class="px-2 py-2 text-center">{{ $item->quantity }}</td>
+                        <td class="px-2 py-2 text-center ">{{ $item->product }}</td>
+                        <td class="px-2 py-2 text-center max-w-72">{{ $item->description }}</td>
+                        <td class="px-2 py-2 text-center ">{{ $item->brand }}</td>
+                        <td class="px-2 py-2 text-center max-w-28">{{ $item->unit }}</td>
+                        <td class="px-2 py-2 text-center">{{ $item->price }}</td>
                         @php
                             $simpleTotal = money($item->total, $quotation->currency->value)->formatSimple();
                         @endphp
-                        <td class="px-4 py-2 text-center">{{ $simpleTotal }}</td>
+                        <td class="px-2 py-2 text-center">{{ $simpleTotal }}</td>
                     </tr>
                 @endforeach
                 <tr>
-                    <td class="px-4 py-2 text-right" colspan="4">SubTotal:</td>
-                    <td class="px-4 py-2 text-center">@money($quotation->subTotal, $quotation->currency->value)</td>
+                    <td class="px-2 py-2 text-right" colspan="6">SubTotal:</td>
+                    <td class="px-2 py-2 text-center">@money($quotation->subTotal, $quotation->currency->value)</td>
                 </tr>
                 <tr>
-                    <td class="px-4 py-2 text-right" colspan="4">I.G.V:</td>
-                    <td class="px-4 py-2 text-center">@money($quotation->igv, $quotation->currency->value)</td>
+                    <td class="px-2 py-2 text-right" colspan="6">I.G.V:</td>
+                    <td class="px-2 py-2 text-center">@money($quotation->igv, $quotation->currency->value)</td>
                 </tr>
                 <tr>
-                    <th class="px-4 py-2 text-right" colspan="4">Total:</th>
-                    <th class="px-4 py-2 text-center">@money($quotation->total, $quotation->currency->value)</th>
+                    <th class="px-2 py-2 text-right" colspan="6">Total:</th>
+                    <th class="px-2 py-2 text-center">@money($quotation->total, $quotation->currency->value)</th>
                 </tr>
                 <!-- Agrega más filas según sea necesario -->
             </tbody>

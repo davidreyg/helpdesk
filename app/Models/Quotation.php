@@ -15,6 +15,7 @@ class Quotation extends Model
         'currency',
         'notes',
         'payment_type',
+        'project',
         'company_id',
     ];
 
