@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('quotation_item', function (Blueprint $table) {
+        Schema::table('quotations', function (Blueprint $table) {
             $table->string('project', 100);
         });
     }
@@ -20,7 +20,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('quotation_item', function (Blueprint $table) {
+        Schema::table('quotations', function (Blueprint $table) {
             //
         });
     }
