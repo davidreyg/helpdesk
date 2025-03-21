@@ -173,6 +173,27 @@ class QuotationResource extends Resource
                 Forms\Components\Textarea::make('notes')
                     ->label(__('Notes'))
                     ->columnSpanFull(),
+                TableRepeater::make('extra_conditions')
+                    ->label(__('Extra Conditions'))
+                    ->default([
+                        [
+                            'name' => 'Tiempo de Entrega:',
+                            'value' => '2 días despues de la girada la orden de compra',
+                        ]
+                    ])
+                    ->headers([
+                        Header::make('name')->label(__('Name')),
+                        Header::make('name')->label('Value')
+                    ])
+                    ->schema([
+                        TextInput::make('name')
+                            ->required()
+                            ->maxLength(100),
+                        TextInput::make('value')
+                            ->required()
+                            ->maxLength(200),
+                    ])
+                    ->columnSpanFull(),
             ]);
     }
 

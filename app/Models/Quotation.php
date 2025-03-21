@@ -16,6 +16,7 @@ class Quotation extends Model
         'notes',
         'payment_type',
         'project',
+        'extra_conditions',
         'company_id',
     ];
 
@@ -57,6 +58,7 @@ class Quotation extends Model
         return [
             'currency' => CurrencyEnum::class,
             'payment_type' => PaymentTypeEnum::class,
+            'extra_conditions' => 'array',
         ];
     }
 

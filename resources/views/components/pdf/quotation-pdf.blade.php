@@ -119,7 +119,9 @@
                     </li>
                 </ol>
             </li>
-            <li class="italic text-sm">Tiempo de Entrega: 2 días despues de la girada la orden de compra</li>
+            @foreach ($quotation->extra_conditions as $item)
+                <li class="italic text-sm">{{ $item['name'] }}: {{ $item['value'] }}</li>
+            @endforeach
         </ol>
     </div>
 </div>
