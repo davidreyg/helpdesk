@@ -119,9 +119,11 @@
                     </li>
                 </ol>
             </li>
-            @foreach ($quotation->extra_conditions as $item)
+            @forelse ($quotation->extra_conditions as $item)
                 <li class="italic text-sm">{{ $item['name'] }}: {{ $item['value'] }}</li>
-            @endforeach
+            @empty
+                <span></span>
+            @endforelse
         </ol>
     </div>
 </div>
