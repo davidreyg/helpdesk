@@ -92,8 +92,8 @@ class QuotationResource extends Resource
                                 Header::make('Qty')
                                     ->label(__('Quantity'))
                                     ->width('80px'),
-                                Header::make('Desc')
-                                    ->label(__('Product')),
+                                Header::make('Product')
+                                    ->label(__('Product') . '/' . __('Service')),
                                 Header::make('Unit')
                                     ->label(__('Description')),
                                 Header::make('Unit')

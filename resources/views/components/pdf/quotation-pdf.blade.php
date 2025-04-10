@@ -45,7 +45,7 @@
             <thead class="bg-gray-200 text-gray-700 divide-y divide-gray-300">
                 <tr>
                     <th class="px-2 py-2 text-center font-bold">Cantidad</th>
-                    <th class="px-2 py-2 text-center font-bold">Producto</th>
+                    <th class="px-2 py-2 text-center font-bold">Producto/Servicio</th>
                     <th class="px-2 py-2 text-center font-bold">Descripcion</th>
                     <th class="px-2 py-2 text-center font-bold">Marca</th>
                     <th class="px-2 py-2 text-center font-bold max-w-24">Unidad</th>
