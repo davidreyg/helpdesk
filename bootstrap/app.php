@@ -11,6 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         channels: __DIR__ . '/../routes/channels.php',
         health: '/up',
     )
+    ->withRouting(
+        api: __DIR__ . '/../routes/api.php',
+        apiPrefix: 'api',
+        // ...
+    )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->trustProxies('*');
     })
