@@ -29,6 +29,7 @@
         "lorisleiva/laravel-actions": "^2.8",
         "motomedialab/laravel-vite-helper": "^1.7",
         "secondnetwork/blade-tabler-icons": "^3.29",
+        "shuvroroy/filament-spatie-laravel-backup": "*",
         "spatie/laravel-model-states": "^2.10",
         "statikbe/laravel-filament-chained-translation-manager": "^3.2"
     },
