@@ -17,6 +17,8 @@ return new class extends Migration {
             $table->string('description', 255);
             $table->string('unit', 100);
             $table->integer('price')->unsigned();
+            $table->string('product', 100);
+            $table->string('brand', 100);
             $table->timestamps();
         });
     }

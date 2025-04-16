@@ -31,7 +31,8 @@
         "secondnetwork/blade-tabler-icons": "^3.29",
         "shuvroroy/filament-spatie-laravel-backup": "*",
         "spatie/laravel-model-states": "^2.10",
-        "statikbe/laravel-filament-chained-translation-manager": "^3.2"
+        "statikbe/laravel-filament-chained-translation-manager": "^3.2",
+        "wnx/laravel-backup-restore": "^1.6"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.5",
