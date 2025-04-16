@@ -17,7 +17,7 @@
     </style>
 
     <link type="text/css" rel="stylesheet" href="pdf.css">
-    @vite('resources/css/filament/admin/theme.css')
+    {{-- @vite('resources/css/filament/admin/theme.css') --}}
 
 </head>
 
