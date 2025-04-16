@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Backups;
 use App\Http\Middleware\ConfigureCurrentPanel;
 use App\Http\Middleware\ForceHttps;
 use App\Livewire\MyProfileExtended;
@@ -103,6 +104,7 @@ class AdminPanelProvider extends PanelProvider
                     ]),
                 FilamentSpatieLaravelBackupPlugin::make()
                     ->usingPolingInterval('10s')
+                    ->usingPage(Backups::class)
             ]);
     }
 }
