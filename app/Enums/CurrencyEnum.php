@@ -9,7 +9,7 @@ enum CurrencyEnum: string implements HasLabel
     case DOLARES = 'USD';
     case SOLES = 'PEN';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return $this->name;
     }

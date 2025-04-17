@@ -8,9 +8,8 @@ enum ReportTypeEnum: string implements HasLabel
 {
     case COTIZACION = 'quotation-pdf';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return $this->value;
     }
-
 }

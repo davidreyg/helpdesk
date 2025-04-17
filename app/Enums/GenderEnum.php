@@ -9,7 +9,7 @@ enum GenderEnum: string implements HasLabel
     case M = 'Male';
     case F = 'Female';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return $this->value;
     }

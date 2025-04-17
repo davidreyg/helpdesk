@@ -38,7 +38,7 @@ enum AppColor: string implements HasColor, HasLabel
 
     public const DEFAULT = self::Indigo->value;
 
-    public function getColor(): string|array|null
+    public function getColor(): array
     {
         return match ($this) {
             self::Slate => Color::Slate,
@@ -66,7 +66,7 @@ enum AppColor: string implements HasColor, HasLabel
         };
     }
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return ucfirst($this->value);
     }
@@ -78,7 +78,7 @@ enum AppColor: string implements HasColor, HasLabel
     {
         $colorArray = $this->getColor();
 
-        if ($colorArray !== null && isset($colorArray[600])) {
+        if (isset($colorArray[600])) {
             $rgbToString = $colorArray[600];
 
             return Rgb::fromString("rgb({$rgbToString})")->toHex();

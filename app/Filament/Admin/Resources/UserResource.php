@@ -9,10 +9,8 @@ use Exception;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Notifications\Auth\VerifyEmail;
 use Filament\Notifications\Notification;
@@ -24,14 +22,18 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
+
     protected static int $globalSearchResultsLimit = 20;
 
     protected static ?int $navigationSort = -1;
+
     protected static ?string $navigationIcon = 'heroicon-s-users';
+
     protected static ?string $navigationGroup = 'Access';
 
     public static function form(Form $form): Form
@@ -62,7 +64,7 @@ class UserResource extends Resource
                     ])
                     ->columnSpan([
                         'sm' => 1,
-                        'lg' => 2
+                        'lg' => 2,
                     ]),
                 Forms\Components\Group::make()
                     ->schema([
@@ -71,7 +73,7 @@ class UserResource extends Resource
                                 Select::make('roles')->label('Role')
                                     ->hiddenLabel()
                                     ->relationship('roles', 'name')
-                                    ->getOptionLabelFromRecordUsing(fn(Model $record) => Str::headline($record->name))
+                                    ->getOptionLabelFromRecordUsing(fn(Role $record) => Str::headline($record->name))
                                     ->multiple()
                                     ->preload()
                                     ->maxItems(1)
@@ -107,7 +109,7 @@ class UserResource extends Resource
                                         ->color('info')
                                         ->action(fn(MailSettings $settings, Model $record) => static::doResendEmailVerification($settings, $record)),
                                 ])
-                                    ->hidden(fn(User $user) => $user->email_verified_at != null)
+                                    ->hidden(fn(User $user): bool => $user->email_verified_at != null)
                                     ->fullWidth(),
                                 Forms\Components\Placeholder::make('created_at')
                                     ->label(__('validation.attributes.created_at'))
@@ -130,8 +132,8 @@ class UserResource extends Resource
                 SpatieMediaLibraryImageColumn::make('media')->label('Avatar')
                     ->collection('avatars')
                     ->wrap(),
-                Tables\Columns\TextColumn::make('username')->label('Username')
-                    ->description(fn(Model $record) => $record->firstname . ' ' . $record->lastname)
+                Tables\Columns\TextColumn::make('name')->label('Username')
+                    // ->description(fn(User $record): string => $record->employee . ' ' . $record->lastname)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('roles.name')->label('Role')
                     ->formatStateUsing(fn($state): string => Str::headline($state))
@@ -194,16 +196,16 @@ class UserResource extends Resource
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            'name' => $record->firstname . ' ' . $record->lastname,
+            'name' => $record->name,
         ];
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __("menu.nav_group.access");
+        return __('menu.nav_group.access');
     }
 
-    public static function doResendEmailVerification($settings = null, $user): void
+    public static function doResendEmailVerification($settings, $user): void
     {
         if (!method_exists($user, 'notify')) {
             $userClass = $user::class;
@@ -211,7 +213,7 @@ class UserResource extends Resource
             throw new Exception("Model [{$userClass}] does not have a [notify()] method.");
         }
 
-        $notification = new VerifyEmail();
+        $notification = new VerifyEmail;
         $notification->url = Filament::getVerifyEmailUrl($user);
 
         $settings->loadMailSettingsToConfig();

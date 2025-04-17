@@ -7,7 +7,6 @@ use App\Enums\Setting\TimeFormat;
 use App\Enums\Setting\WeekStart;
 use App\Settings\LocalizationSettings;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
-use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
@@ -15,15 +14,16 @@ use Filament\Notifications\Notification;
 use Filament\Pages\SettingsPage;
 use Filament\Support\Facades\FilamentView;
 use Illuminate\Contracts\Support\Htmlable;
+
 use function Filament\Support\is_app_url;
 
 class ManageLocalization extends SettingsPage
 {
     use HasPageShield;
+
     protected static ?string $navigationIcon = 'tabler-world';
 
     protected static string $settings = LocalizationSettings::class;
-
 
     /**
      * @var array<string, mixed> | null
@@ -71,7 +71,7 @@ class ManageLocalization extends SettingsPage
             ])->columns();
     }
 
-    public function save(LocalizationSettings $settings = null): void
+    public function save(?LocalizationSettings $settings = null): void
     {
         try {
             $this->callHook('beforeValidate');
@@ -92,14 +92,14 @@ class ManageLocalization extends SettingsPage
             $this->sendSuccessNotification('Configuración de localizacion guardada.');
 
             $this->redirect(static::getUrl(), navigate: FilamentView::hasSpaMode() && is_app_url(static::getUrl()));
-        } catch (\Throwable $th) {
-            $this->sendErrorNotification('Failed to update settings. ' . $th->getMessage());
-            throw $th;
+        } catch (\Throwable $throwable) {
+            $this->sendErrorNotification('Failed to update settings. ' . $throwable->getMessage());
+
+            throw $throwable;
         }
     }
 
-
-    public function sendSuccessNotification($title)
+    public function sendSuccessNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -107,7 +107,7 @@ class ManageLocalization extends SettingsPage
             ->send();
     }
 
-    public function sendErrorNotification($title)
+    public function sendErrorNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -120,23 +120,22 @@ class ManageLocalization extends SettingsPage
         return trans('filament-translation-manager::messages.navigation_group');
     }
 
-
     public static function getNavigationLabel(): string
     {
         return __('Localize');
     }
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
         return __('Localize');
     }
 
-    public function getHeading(): string|Htmlable
+    public function getHeading(): string | Htmlable
     {
         return __('Localize');
     }
 
-    public function getSubheading(): string|Htmlable|null
+    public function getSubheading(): string | Htmlable | null
     {
         return __('Localize');
     }

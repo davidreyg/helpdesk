@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class InitSeeder extends Seeder
@@ -19,7 +18,8 @@ class InitSeeder extends Seeder
             \DB::unprepared($sql);
         }
     }
-    public function sedePrincipal()
+
+    public function sedePrincipal(): void
     {
         $data = [
             'name' => 'Master Electronics Perú S.A.C',

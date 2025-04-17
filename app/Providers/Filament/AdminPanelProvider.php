@@ -5,16 +5,15 @@ namespace App\Providers\Filament;
 use App\Http\Middleware\ConfigureCurrentPanel;
 use App\Http\Middleware\ForceHttps;
 use App\Livewire\MyProfileExtended;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use DutchCodingCompany\FilamentDeveloperLogins\FilamentDeveloperLoginsPlugin;
 use Filament\Http\Middleware\Authenticate;
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -72,7 +71,7 @@ class AdminPanelProvider extends PanelProvider
                 FilamentShieldPlugin::make()
                     ->gridColumns([
                         'default' => 2,
-                        'sm' => 1
+                        'sm' => 1,
                     ])
                     ->sectionColumnSpan(1)
                     ->checkboxListColumns([
@@ -103,7 +102,7 @@ class AdminPanelProvider extends PanelProvider
                     ]),
                 FilamentSpatieLaravelBackupPlugin::make()
                     ->usingPolingInterval('10s')
-                    ->usingPage(\App\Filament\Admin\Pages\Backups::class)
+                    ->usingPage(\App\Filament\Admin\Pages\Backups::class),
             ]);
     }
 }

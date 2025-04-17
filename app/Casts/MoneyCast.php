@@ -29,7 +29,7 @@ class MoneyCast implements CastsAttributes
 
         if (is_numeric($value)) {
             $value = (string) $value;
-        } elseif (!is_string($value)) {
+        } elseif (! is_string($value)) {
             throw new UnexpectedValueException('Expected string or numeric value for money cast');
         }
 

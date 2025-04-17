@@ -11,7 +11,7 @@ enum TableSortDirection: string implements HasLabel
 
     public const DEFAULT = self::Ascending->value;
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return (string) ucfirst($this->name);
     }

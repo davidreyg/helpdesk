@@ -3,7 +3,6 @@
 namespace App\Actions;
 
 use App\Enums\ReportTypeEnum;
-use App\Enums\Setting\ReportType;
 use Gotenberg\Exceptions\GotenbergApiErrored;
 use Gotenberg\Gotenberg;
 use Gotenberg\Modules\ChromiumPdf;
@@ -13,17 +12,20 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class PdfGenerator
 {
     use AsAction;
-    private string $logo;
-    private float $width;
-    private float $height;
-    private ?string $header;
-    private string $filename;
-    private string $marginTop;
-    private string $marginBottom;
-    private string $marginLeft;
-    private string $marginRight;
-    private ChromiumPdf $gotenberg;
 
+    private ?string $header = null;
+
+    private string $filename;
+
+    private string $marginTop;
+
+    private string $marginBottom;
+
+    private string $marginLeft;
+
+    private string $marginRight;
+
+    private ChromiumPdf $gotenberg;
 
     public function __construct()
     {
@@ -34,6 +36,7 @@ class PdfGenerator
     public function landscape(): PdfGenerator
     {
         $this->gotenberg->landscape();
+
         return $this;
     }
 
@@ -54,114 +57,134 @@ class PdfGenerator
 
         try {
             $response = Gotenberg::send($request);
+
             return response(
                 $response->getBody()->getContents(),
                 200,
                 [
                     'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => "inline; filename=$FILENAME",
+                    'Content-Disposition' => "inline; filename={$FILENAME}",
                 ]
             );
 
-        } catch (GotenbergApiErrored $e) {
-            $e->getResponse();
-            echo $e->getTraceAsString();
-            throw new \Exception($e->getMessage());
+        } catch (GotenbergApiErrored $gotenbergApiErrored) {
+            $gotenbergApiErrored->getResponse();
+            echo $gotenbergApiErrored->getTraceAsString();
+
+            throw new \Exception($gotenbergApiErrored->getMessage(), $gotenbergApiErrored->getCode(), $gotenbergApiErrored);
         }
     }
 
-    public function header(string $view)
+    public function header(string $view): static
     {
-        //FIXME: Quitamos esto por la reestructuracion
+        // FIXME: Quitamos esto por la reestructuracion
         // $establecimiento = auth()->user()->load('establecimiento')->establecimiento->nombre;
-        $this->header = view(isset($view) ? $view : 'components.pdf.header', ['logoBase64' => $this->logo()])->render();
+        $this->header = view($view, ['logoBase64' => $this->logo()])->render();
+
         return $this;
     }
 
-    public function filename(string $filename)
+    public function filename(string $filename): static
     {
         $this->filename = $filename;
-        return $this;
-    }
-    public function marginTop(string $marginTop)
-    {
-        $this->marginTop = $marginTop;
-        return $this;
-    }
-    public function marginBottom(string $marginBottom)
-    {
-        $this->marginBottom = $marginBottom;
-        return $this;
-    }
-    public function marginLeft(string $marginLeft)
-    {
-        $this->marginLeft = $marginLeft;
-        return $this;
-    }
-    public function marginRight(string $marginRight)
-    {
-        $this->marginRight = $marginRight;
+
         return $this;
     }
 
-    public function getHeader()
+    public function marginTop(string $marginTop): static
+    {
+        $this->marginTop = $marginTop;
+
+        return $this;
+    }
+
+    public function marginBottom(string $marginBottom): static
+    {
+        $this->marginBottom = $marginBottom;
+
+        return $this;
+    }
+
+    public function marginLeft(string $marginLeft): static
+    {
+        $this->marginLeft = $marginLeft;
+
+        return $this;
+    }
+
+    public function marginRight(string $marginRight): static
+    {
+        $this->marginRight = $marginRight;
+
+        return $this;
+    }
+
+    public function getHeader(): ?string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
         if (empty($this->header)) {
             $this->header('components.pdf.header');
         }
+
         return $this->header;
     }
 
-    public function getFilename()
+    public function getFilename(): string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
-        if (empty($this->filename)) {
+        if (!isset($this->filename) || ($this->filename === '' || $this->filename === '0')) {
             $this->filename = 'DocumentoPdf';
         }
+
         return $this->filename;
     }
 
-    public function getMarginTop()
+    public function getMarginTop(): string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
-        if (empty($this->marginTop)) {
+        if (!isset($this->marginTop) || ($this->marginTop === '' || $this->marginTop === '0')) {
             $this->marginTop = '90px';
         }
+
         return $this->marginTop;
     }
-    public function getMarginBottom()
+
+    public function getMarginBottom(): string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
-        if (empty($this->marginBottom)) {
+        if (!isset($this->marginBottom) || ($this->marginBottom === '' || $this->marginBottom === '0')) {
             $this->marginBottom = '50px';
         }
+
         return $this->marginBottom;
     }
-    public function getMarginLeft()
+
+    public function getMarginLeft(): string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
-        if (empty($this->marginLeft)) {
+        if (!isset($this->marginLeft) || ($this->marginLeft === '' || $this->marginLeft === '0')) {
             $this->marginLeft = '30px';
         }
+
         return $this->marginLeft;
     }
-    public function getMarginRight()
+
+    public function getMarginRight(): string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
-        if (empty($this->marginRight)) {
+        if (!isset($this->marginRight) || ($this->marginRight === '' || $this->marginRight === '0')) {
             $this->marginRight = '30px';
         }
+
         return $this->marginRight;
     }
-
 
     private function logo(): string
     {
         $logoPath = public_path('images/logo.jpg'); // Ruta a la imagen en el sistema de archivos
         $logoData = base64_encode(file_get_contents($logoPath));
-        $logoBase64 = "data:image/jpg;base64,$logoData";
-        return $logoBase64;
+
+        return "data:image/jpg;base64,{$logoData}";
     }
 
     private function footer()

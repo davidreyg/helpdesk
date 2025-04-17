@@ -8,7 +8,6 @@ use App\Enums\Setting\RecordsPerPage;
 use App\Enums\Setting\TableSortDirection;
 use App\Settings\AppearanceSettings;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
-use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -23,10 +22,12 @@ use function Filament\Support\is_app_url;
 class ManageAppearance extends SettingsPage
 {
     use HasPageShield;
-    protected static ?string $navigationIcon = 'tabler-palette';
-    protected static ?int $navigationSort = 2;
-    protected static string $settings = AppearanceSettings::class;
 
+    protected static ?string $navigationIcon = 'tabler-palette';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static string $settings = AppearanceSettings::class;
 
     public function form(Form $form): Form
     {
@@ -49,13 +50,14 @@ class ManageAppearance extends SettingsPage
                     ->native(false)
                     ->options(
                         collect(Font::cases())
-                            ->mapWithKeys(static fn($case) => [
+                            ->mapWithKeys(static fn ($case) => [
                                 $case->value => "<span style='font-family:{$case->getLabel()}'>{$case->getLabel()}</span>",
                             ]),
                     ),
 
             ])->columns();
     }
+
     protected function getPaletteSection(): Component
     {
         return Section::make('Paleta de colores')
@@ -73,8 +75,8 @@ class ManageAppearance extends SettingsPage
                 ->native(false)
                 ->options(
                     collect(AppColor::cases())
-                        ->sort(static fn($a, $b) => $a->value <=> $b->value)
-                        ->mapWithKeys(static fn($case) => [
+                        ->sort(static fn ($a, $b): int => $a->value <=> $b->value)
+                        ->mapWithKeys(static fn ($case) => [
                             $case->value => "<span class='flex items-center gap-x-4'>
                             <span class='rounded-full w-4 h-4' style='background:rgb(" . $case->getColor()[600] . ")'></span>
                             <span>" . $case->getLabel() . '</span>
@@ -86,8 +88,8 @@ class ManageAppearance extends SettingsPage
                 ->native(false)
                 ->options(
                     collect(AppColor::cases())
-                        ->sort(static fn($a, $b) => $a->value <=> $b->value)
-                        ->mapWithKeys(static fn($case) => [
+                        ->sort(static fn ($a, $b): int => $a->value <=> $b->value)
+                        ->mapWithKeys(static fn ($case) => [
                             $case->value => "<span class='flex items-center gap-x-4'>
                             <span class='rounded-full w-4 h-4' style='background:rgb(" . $case->getColor()[600] . ")'></span>
                             <span>" . $case->getLabel() . '</span>
@@ -99,8 +101,8 @@ class ManageAppearance extends SettingsPage
                 ->native(false)
                 ->options(
                     collect(AppColor::cases())
-                        ->sort(static fn($a, $b) => $a->value <=> $b->value)
-                        ->mapWithKeys(static fn($case) => [
+                        ->sort(static fn ($a, $b): int => $a->value <=> $b->value)
+                        ->mapWithKeys(static fn ($case) => [
                             $case->value => "<span class='flex items-center gap-x-4'>
                             <span class='rounded-full w-4 h-4' style='background:rgb(" . $case->getColor()[600] . ")'></span>
                             <span>" . $case->getLabel() . '</span>
@@ -112,8 +114,8 @@ class ManageAppearance extends SettingsPage
                 ->native(false)
                 ->options(
                     collect(AppColor::cases())
-                        ->sort(static fn($a, $b) => $a->value <=> $b->value)
-                        ->mapWithKeys(static fn($case) => [
+                        ->sort(static fn ($a, $b): int => $a->value <=> $b->value)
+                        ->mapWithKeys(static fn ($case) => [
                             $case->value => "<span class='flex items-center gap-x-4'>
                             <span class='rounded-full w-4 h-4' style='background:rgb(" . $case->getColor()[600] . ")'></span>
                             <span>" . $case->getLabel() . '</span>
@@ -125,8 +127,8 @@ class ManageAppearance extends SettingsPage
                 ->native(false)
                 ->options(
                     collect(AppColor::cases())
-                        ->sort(static fn($a, $b) => $a->value <=> $b->value)
-                        ->mapWithKeys(static fn($case) => [
+                        ->sort(static fn ($a, $b): int => $a->value <=> $b->value)
+                        ->mapWithKeys(static fn ($case) => [
                             $case->value => "<span class='flex items-center gap-x-4'>
                             <span class='rounded-full w-4 h-4' style='background:rgb(" . $case->getColor()[600] . ")'></span>
                             <span>" . $case->getLabel() . '</span>
@@ -138,8 +140,8 @@ class ManageAppearance extends SettingsPage
                 ->native(false)
                 ->options(
                     collect(AppColor::cases())
-                        ->sort(static fn($a, $b) => $a->value <=> $b->value)
-                        ->mapWithKeys(static fn($case) => [
+                        ->sort(static fn ($a, $b): int => $a->value <=> $b->value)
+                        ->mapWithKeys(static fn ($case) => [
                             $case->value => "<span class='flex items-center gap-x-4'>
                             <span class='rounded-full w-4 h-4' style='background:rgb(" . $case->getColor()[600] . ")'></span>
                             <span>" . $case->getLabel() . '</span>
@@ -160,8 +162,7 @@ class ManageAppearance extends SettingsPage
             ])->columns();
     }
 
-
-    public function save(AppearanceSettings $settings = null): void
+    public function save(?AppearanceSettings $settings = null): void
     {
         try {
             $this->callHook('beforeValidate');
@@ -182,13 +183,14 @@ class ManageAppearance extends SettingsPage
             $this->sendSuccessNotification('Apariencia actualizada.');
 
             $this->redirect(static::getUrl(), navigate: FilamentView::hasSpaMode() && is_app_url(static::getUrl()));
-        } catch (\Throwable $th) {
-            $this->sendErrorNotification('Failed to update settings. ' . $th->getMessage());
-            throw $th;
+        } catch (\Throwable $throwable) {
+            $this->sendErrorNotification('Failed to update settings. ' . $throwable->getMessage());
+
+            throw $throwable;
         }
     }
 
-    public function sendSuccessNotification($title)
+    public function sendSuccessNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -196,7 +198,7 @@ class ManageAppearance extends SettingsPage
             ->send();
     }
 
-    public function sendErrorNotification($title)
+    public function sendErrorNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -214,12 +216,12 @@ class ManageAppearance extends SettingsPage
         return __('Appearance');
     }
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
         return __('Appearance');
     }
 
-    public function getHeading(): string|Htmlable
+    public function getHeading(): string | Htmlable
     {
         return __('Appearance');
     }

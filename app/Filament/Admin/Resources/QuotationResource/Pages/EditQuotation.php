@@ -2,12 +2,10 @@
 
 namespace App\Filament\Admin\Resources\QuotationResource\Pages;
 
-use App\Enums\ReportTypeEnum;
 use App\Filament\Admin\Resources\QuotationResource;
 use App\Models\Quotation;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
-use Illuminate\Database\Eloquent\Model;
 
 class EditQuotation extends EditRecord
 {
@@ -15,7 +13,13 @@ class EditQuotation extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $data['code'] = $this->getRecord()->code;
+        $record = $this->getRecord();
+
+        // Si getRecord no devuelve Quotation, podemos crear una instancia de Quotation
+        $quotation = new Quotation();
+        $quotation->fill($record->toArray()); // Copia los atributos del record a la instancia Quotation
+
+        $data['code'] = $quotation->code;  // Ahora accedes a las propiedades de Quotation
 
         return $data;
     }
@@ -28,9 +32,9 @@ class EditQuotation extends EditRecord
                 ->label(__('Print'))
                 ->icon('tabler-printer')
                 ->url(fn(Quotation $record): string => route('quotation-pdf', [
-                    'quotation' => $record->id
+                    'quotation' => $record->id,
                 ]))
-                ->openUrlInNewTab()
+                ->openUrlInNewTab(),
         ];
     }
 }

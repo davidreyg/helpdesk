@@ -10,9 +10,8 @@ enum PriorityEnum: string implements HasLabel
     case MEDIUM = 'Medio';
     case LOW = 'Bajo';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return $this->value;
     }
-
 }

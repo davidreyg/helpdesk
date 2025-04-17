@@ -25,13 +25,13 @@ class CreateUser extends CreateRecord
         $user = $this->record;
         $settings = app(MailSettings::class);
 
-        if (!method_exists($user, 'notify')) {
+        if (! method_exists($user, 'notify')) {
             $userClass = $user::class;
 
             throw new Exception("Model [{$userClass}] does not have a [notify()] method.");
         }
 
-        $notification = new VerifyEmail();
+        $notification = new VerifyEmail;
         $notification->url = Filament::getVerifyEmailUrl($user);
 
         $settings->loadMailSettingsToConfig();

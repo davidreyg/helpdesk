@@ -9,11 +9,14 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\ModelStates\HasStates;
 
+/**
+ * @property IncidentState $status
+ * @property int $code
+ */
 class Incident extends Model implements HasMedia
 {
-    /** @use HasFactory<\Database\Factories\IncidentFactory> */
-    use HasFactory;
-    use HasStates, InteractsWithMedia;
+    use HasStates;
+    use InteractsWithMedia;
 
     protected $fillable = [
         'code',
@@ -22,7 +25,7 @@ class Incident extends Model implements HasMedia
         'company_id',
         'priority',
         'description',
-        'status'
+        'status',
     ];
 
     protected function casts(): array

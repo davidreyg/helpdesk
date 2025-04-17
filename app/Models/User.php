@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasName;
 use Filament\Panel;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,11 +17,17 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser, MustVerifyEmail, HasAvatar, HasName, HasMedia
+/**
+ * @property Employee $employee
+ */
+class User extends Authenticatable implements FilamentUser, HasAvatar, HasMedia, HasName, MustVerifyEmail
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens;
-    use HasRoles, InteractsWithMedia;
+    use HasApiTokens; /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory;
+    use HasRoles;
+
+    use InteractsWithMedia;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -70,7 +76,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return $this->getMedia('avatars')?->first()?->getUrl() ?? $this->getMedia('avatars')?->first()?->getUrl('thumb') ?? null;
+        return $this->getMedia('avatars')->first()?->getUrl() ?? $this->getMedia('avatars')->first()?->getUrl('thumb') ?? null;
     }
 
     public function isSuperAdmin(): bool
@@ -83,7 +89,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail, Has
         return true;
     }
 
-    public function registerMediaConversions(Media|null $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
             ->fit(Fit::Contain, 300, 300)

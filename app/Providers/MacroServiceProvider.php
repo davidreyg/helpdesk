@@ -22,19 +22,19 @@ class MacroServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        TextInput::macro('money', function (string|Closure|null $currency = null): static {
+        TextInput::macro('money', function (string | Closure | null $currency = null): static {
             $this->extraAttributes(['wire:key' => Str::random()])
-                ->prefix(static function (TextInput $component) use ($currency) {
+                ->prefix(static function (TextInput $component) use ($currency): string {
                     $currency = $component->evaluate($currency);
 
                     return currency($currency)->getPrefix();
                 })
-                ->suffix(static function (TextInput $component) use ($currency) {
+                ->suffix(static function (TextInput $component) use ($currency): string {
                     $currency = $component->evaluate($currency);
 
                     return currency($currency)->getSuffix();
                 })
-                ->mask(static function (TextInput $component) use ($currency) {
+                ->mask(static function (TextInput $component) use ($currency): \Filament\Support\RawJs {
                     $currency = $component->evaluate($currency);
 
                     return moneyMask($currency);

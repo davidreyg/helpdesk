@@ -19,7 +19,7 @@ enum Font: string implements HasLabel
 
     public const DEFAULT = self::Inter->value;
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return ucwords(str_replace('_', ' ', $this->value));
     }

@@ -5,14 +5,11 @@ namespace App\Filament\Admin\Resources;
 use App\Enums\CurrencyEnum;
 use App\Enums\PaymentTypeEnum;
 use App\Filament\Admin\Resources\QuotationResource\Pages;
-use App\Filament\Admin\Resources\QuotationResource\RelationManagers;
 use App\Models\Quotation;
 use App\Utilities\CurrencyConverter;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
@@ -24,8 +21,6 @@ use Filament\Tables;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
 
@@ -56,7 +51,7 @@ class QuotationResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('code')
                     ->label(__('Code'))
-                    ->default(fn() => 'COT-' . str_pad(Quotation::generateNextNumber(), 7, '0', STR_PAD_LEFT))
+                    ->default(fn(): string => 'COT-' . str_pad(Quotation::generateNextNumber() . '', 7, '0', STR_PAD_LEFT))
                     ->disabled()
                     ->required()
                     ->maxLength(100),
@@ -84,7 +79,7 @@ class QuotationResource extends Resource
                             ->hiddenLabel()
                             ->relationship('quotationItems')
                             ->addActionLabel(__('Add'))
-                            ->afterStateUpdated(function ($livewire) {
+                            ->afterStateUpdated(function ($livewire): void {
                                 // Aquí detectamos si se eliminó un ítem
                                 self::updateQuotationTotals($livewire);
                             })
@@ -117,12 +112,11 @@ class QuotationResource extends Resource
                                     ->maxValue(99)
                                     ->live()
                                     ->hint(
-                                        fn(TextInput $component) =>
-                                        new HtmlString(
+                                        fn(TextInput $component): \Illuminate\Support\HtmlString => new HtmlString(
                                             \Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])
                                         )
                                     )
-                                    ->afterStateUpdated(function (Get $get, Set $set, $livewire) {
+                                    ->afterStateUpdated(function (Get $get, Set $set, $livewire): void {
                                         self::updateItemTotals($get, $set, $livewire);
                                         self::updateQuotationTotals($livewire);
                                     }),
@@ -143,25 +137,24 @@ class QuotationResource extends Resource
                                     ->default(0)
                                     ->live(true)
                                     ->hint(
-                                        fn(TextInput $component) =>
-                                        new HtmlString(
+                                        fn(TextInput $component): \Illuminate\Support\HtmlString => new HtmlString(
                                             \Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])
                                         )
                                     )
-                                    ->afterStateUpdated(function (Get $get, Set $set, $livewire) {
+                                    ->afterStateUpdated(function (Get $get, Set $set, $livewire): void {
                                         self::updateItemTotals($get, $set, $livewire);
                                         self::updateQuotationTotals($livewire);
                                     })
-                                    ->money(fn(Get $get) => $get('../../currency')),
+                                    ->money(fn(Get $get): mixed => $get('../../currency')),
                                 TextInput::make('total')
                                     ->readOnly()
                                     ->hiddenLabel()
-                                    ->money(fn(Get $get) => $get('../../currency'))
-                                    ->afterStateHydrated(function (Get $get, Set $set, $livewire) {
+                                    ->money(fn(Get $get): mixed => $get('../../currency'))
+                                    ->afterStateHydrated(function (Get $get, Set $set, $livewire): void {
                                         self::updateItemTotals($get, $set, $livewire);
                                         self::updateQuotationTotals($livewire);
                                     }),
-                            ])
+                            ]),
                     ]),
                 ViewField::make('subTotal')
                     ->view('filament.admin.forms.components.total')
@@ -179,11 +172,11 @@ class QuotationResource extends Resource
                         [
                             'name' => 'Tiempo de Entrega:',
                             'value' => '2 días despues de la girada la orden de compra',
-                        ]
+                        ],
                     ])
                     ->headers([
                         Header::make('name')->label(__('Name')),
-                        Header::make('name')->label('Value')
+                        Header::make('name')->label('Value'),
                     ])
                     ->schema([
                         TextInput::make('name')
@@ -216,7 +209,7 @@ class QuotationResource extends Resource
                 Tables\Columns\TextColumn::make('currency')
                     ->label(__('Currency')),
                 Tables\Columns\TextColumn::make('total')
-                    ->formatStateUsing(fn(string $state, Quotation $record) => money($state, $record->currency->value)),
+                    ->formatStateUsing(fn(string $state, Quotation $record): \Akaunting\Money\Money => money($state, $record->currency->value)),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -226,7 +219,7 @@ class QuotationResource extends Resource
                 SelectFilter::make('company')
                     ->label(__('Company'))
                     ->relationship('company', 'name')
-                    ->searchable()
+                    ->searchable(),
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -263,22 +256,22 @@ class QuotationResource extends Resource
         $price = $get('price');
         $priceInt = CurrencyConverter::prepareForAccessor($price, $currency);
 
-
-        $total = $priceInt * $qty;
+        $total = (int) ($priceInt * $qty);
         $totalConverted = CurrencyConverter::prepareForMutator($total, $currency);
         $set('total', $totalConverted);
     }
+
     public static function updateQuotationTotals(Component $livewire): void
     {
         $statePath = $livewire->getFormStatePath();
         // Retrieve the state path of the form. Most likely it's `data` but it could be something else.
         // dd(data_get($livewire, $statePath));
         $data = data_get($livewire, $statePath);
-        $currency = data_get($livewire, $statePath . '.currency') ?? 'PEN';
+        $currency = data_get($livewire, $statePath . '.currency', 'PEN');
         $totalSum = collect($data['items'])
             ->pluck('total')
             ->filter()
-            ->map(fn($item) => CurrencyConverter::prepareForAccessor($item, $currency))
+            ->map(fn($item): int => CurrencyConverter::prepareForAccessor($item, $currency))
             ->sum();
         data_set($livewire, $statePath . '.subTotal', $totalSum);
         // dump($totalSum);

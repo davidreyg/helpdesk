@@ -7,6 +7,14 @@ use App\Enums\PaymentTypeEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property CurrencyEnum $currency
+ * @property string $code
+ * @property \Illuminate\Database\Eloquent\Collection<int,QuotationItem> $quotationItems
+ * @property int $subTotal
+ * @property float $igv
+ * @property float $total
+ */
 class Quotation extends Model
 {
     protected $fillable = [
@@ -22,34 +30,34 @@ class Quotation extends Model
 
     public static function generateNextNumber(): int
     {
-        return (static::max('number') ?? 0) + 1;
+        return (static::query()->max('number') ?? 0) + 1;
     }
 
     protected function code(): Attribute
     {
         return Attribute::make(
-            get: fn() => 'COT-' . str_pad($this->number, 7, '0', STR_PAD_LEFT)
+            get: fn(): string => 'COT-' . str_pad($this->number . '', 7, '0', STR_PAD_LEFT)
         );
     }
 
     protected function subTotal(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->quotationItems->sum(fn($item) => $item->total),
+            get: fn(): int => $this->quotationItems->sum(fn($item) => $item->total),
         );
     }
 
     protected function igv(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->subTotal * 0.18
+            get: fn(): float => $this->subTotal * 0.18
         );
     }
 
     protected function total(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->subTotal + $this->igv
+            get: fn(): float => $this->subTotal + $this->igv
         );
     }
 
@@ -76,7 +84,7 @@ class Quotation extends Model
     {
         parent::boot();
 
-        static::creating(function ($quotation) {
+        static::creating(function ($quotation): void {
             $quotation->number = static::generateNextNumber();
         });
     }

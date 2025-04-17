@@ -34,7 +34,7 @@ enum DateFormat: string implements HasLabel
 
     public const DEFAULT = self::MDY_SHORT_COMMA->value;
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return now()->translatedFormat($this->value);
     }

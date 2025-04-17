@@ -10,11 +10,13 @@ use Spatie\LaravelSettings\Settings;
 class LocalizationSettings extends Settings
 {
     public DateFormat $date_format;
+
     public TimeFormat $time_format;
+
     public WeekStart $week_start;
+
     public static function group(): string
     {
         return 'localization';
     }
-
 }

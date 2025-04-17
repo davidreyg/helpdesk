@@ -32,11 +32,11 @@ class ListUsers extends ListRecords
         $user = auth()->user();
         $tabs = [
             null => Tab::make('All'),
-            'admin' => Tab::make()->query(fn($query) => $query->with('roles')->whereRelation('roles', 'name', '=', 'admin')),
+            'admin' => Tab::make()->query(fn ($query) => $query->with('roles')->whereRelation('roles', 'name', '=', 'admin')),
         ];
 
         if ($user->isSuperAdmin()) {
-            $tabs['superadmin'] = Tab::make()->query(fn($query) => $query->with('roles')->whereRelation('roles', 'name', '=', config('filament-shield.super_admin.name')));
+            $tabs['superadmin'] = Tab::make()->query(fn ($query) => $query->with('roles')->whereRelation('roles', 'name', '=', config('filament-shield.super_admin.name')));
         }
 
         return $tabs;
@@ -47,8 +47,8 @@ class ListUsers extends ListRecords
         $user = auth()->user();
         $model = (new (static::$resource::getModel()))->with('roles')->where('id', '!=', auth()->user()->id);
 
-        if (!$user->isSuperAdmin()) {
-            $model = $model->whereDoesntHave('roles', function ($query) {
+        if (! $user->isSuperAdmin()) {
+            return $model->whereDoesntHave('roles', function ($query): void {
                 $query->where('name', '=', config('filament-shield.super_admin.name'));
             });
         }

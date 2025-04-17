@@ -7,6 +7,10 @@ use App\Utilities\CurrencyConverter;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
+/**
+ * @property Quotation $quotation
+ * @property int $total
+ */
 class QuotationItem extends Pivot
 {
     protected $fillable = [
@@ -26,10 +30,9 @@ class QuotationItem extends Pivot
     protected function total(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->quantity * CurrencyConverter::prepareForAccessor($this->price, $this->quotation->currency->value)
+            get: fn(): int => $this->quantity * CurrencyConverter::prepareForAccessor("{$this->price}", $this->quotation->currency->value)
         );
     }
-
 
     protected function casts(): array
     {

@@ -30,7 +30,7 @@ class EmployeeFactory extends Factory
             'document_number' => $this->faker->numerify('########'), // 8-digit document number
             'gender' => $this->faker->randomElement(GenderEnum::cases())->value,
             'address' => $this->faker->address(),
-            'company_id' => Company::inRandomOrder()->first()->id,
+            'company_id' => \App\Models\Company::query()->inRandomOrder()->first()->id,
         ];
     }
 }

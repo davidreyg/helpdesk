@@ -16,9 +16,11 @@ use function Filament\Support\is_app_url;
 class ManageGeneral extends SettingsPage
 {
     use HasPageShield;
+
     protected static string $settings = GeneralSettings::class;
 
     protected static ?int $navigationSort = 1;
+
     protected static ?string $navigationIcon = 'fluentui-settings-20';
 
     /**
@@ -47,19 +49,19 @@ class ManageGeneral extends SettingsPage
         return $form
             ->schema([
                 Forms\Components\Section::make('Site')
-                    ->label(fn() => __('page.general_settings.sections.site'))
-                    ->description(fn() => __('page.general_settings.sections.site.description'))
+                    ->label(fn () => __('page.general_settings.sections.site'))
+                    ->description(fn () => __('page.general_settings.sections.site.description'))
                     ->icon('fluentui-web-asset-24-o')
                     ->schema([
                         Forms\Components\Grid::make()->schema([
                             Forms\Components\TextInput::make('brand_name')
-                                ->label(fn() => __('page.general_settings.fields.brand_name'))
+                                ->label(fn () => __('page.general_settings.fields.brand_name'))
                                 ->required(),
                             Forms\Components\Select::make('site_active')
-                                ->label(fn() => __('page.general_settings.fields.site_active'))
+                                ->label(fn () => __('page.general_settings.fields.site_active'))
                                 ->options([
-                                    0 => "Not Active",
-                                    1 => "Active",
+                                    0 => 'Not Active',
+                                    1 => 'Active',
                                 ])
                                 ->native(false)
                                 ->required(),
@@ -67,11 +69,11 @@ class ManageGeneral extends SettingsPage
                         Forms\Components\Grid::make()->schema([
                             Forms\Components\Grid::make()->schema([
                                 Forms\Components\TextInput::make('brand_logoHeight')
-                                    ->label(fn() => __('page.general_settings.fields.brand_logoHeight'))
+                                    ->label(fn () => __('page.general_settings.fields.brand_logoHeight'))
                                     ->required()
                                     ->columnSpan(2),
                                 Forms\Components\FileUpload::make('brand_logo')
-                                    ->label(fn() => __('page.general_settings.fields.brand_logo'))
+                                    ->label(fn () => __('page.general_settings.fields.brand_logo'))
                                     ->image()
                                     ->directory('sites')
                                     ->visibility('public')
@@ -82,7 +84,7 @@ class ManageGeneral extends SettingsPage
                             ])
                                 ->columnSpan(2),
                             Forms\Components\FileUpload::make('site_favicon')
-                                ->label(fn() => __('page.general_settings.fields.site_favicon'))
+                                ->label(fn () => __('page.general_settings.fields.site_favicon'))
                                 ->image()
                                 ->directory('sites')
                                 ->visibility('public')
@@ -99,23 +101,15 @@ class ManageGeneral extends SettingsPage
 
     public function save(): void
     {
-        try {
-            $data = $this->mutateFormDataBeforeSave($this->form->getState());
-
-            $settings = app(static::getSettings());
-
-            $settings->fill($data);
-            $settings->save();
-
-            Notification::make()
-                ->title('Settings updated.')
-                ->success()
-                ->send();
-
-            $this->redirect(static::getUrl(), navigate: FilamentView::hasSpaMode() && is_app_url(static::getUrl()));
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        $data = $this->mutateFormDataBeforeSave($this->form->getState());
+        $settings = app(static::getSettings());
+        $settings->fill($data);
+        $settings->save();
+        Notification::make()
+            ->title('Settings updated.')
+            ->success()
+            ->send();
+        $this->redirect(static::getUrl(), navigate: FilamentView::hasSpaMode() && is_app_url(static::getUrl()));
     }
 
     public static function getNavigationGroup(): ?string
@@ -125,21 +119,21 @@ class ManageGeneral extends SettingsPage
 
     public static function getNavigationLabel(): string
     {
-        return __("page.general_settings.navigationLabel");
+        return __('page.general_settings.navigationLabel');
     }
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
-        return __("page.general_settings.title");
+        return __('page.general_settings.title');
     }
 
-    public function getHeading(): string|Htmlable
+    public function getHeading(): string | Htmlable
     {
-        return __("page.general_settings.heading");
+        return __('page.general_settings.heading');
     }
 
-    public function getSubheading(): string|Htmlable|null
+    public function getSubheading(): string | Htmlable | null
     {
-        return __("page.general_settings.subheading");
+        return __('page.general_settings.subheading');
     }
 }

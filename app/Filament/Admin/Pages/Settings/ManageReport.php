@@ -3,10 +3,8 @@
 namespace App\Filament\Admin\Pages\Settings;
 
 use App\Enums\Setting\Font;
-use App\Settings\GeneralSettings;
 use App\Settings\ReportSettings;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
-use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
@@ -24,11 +22,12 @@ use Illuminate\Contracts\Support\Htmlable;
 class ManageReport extends SettingsPage
 {
     use HasPageShield;
+
     protected static ?string $navigationIcon = 'tabler-file-type-pdf';
+
     protected static ?int $navigationSort = 2;
 
     protected static string $settings = ReportSettings::class;
-
 
     public function form(Form $form): Form
     {
@@ -38,6 +37,7 @@ class ManageReport extends SettingsPage
                 $this->getTemplateSection(),
             ]);
     }
+
     public function getMaxContentWidth(): MaxWidth
     {
         return MaxWidth::ScreenTwoExtraLarge;
@@ -65,7 +65,7 @@ class ManageReport extends SettingsPage
                     ->native(false)
                     ->options(
                         collect(Font::cases())
-                            ->mapWithKeys(static fn($case) => [
+                            ->mapWithKeys(static fn ($case) => [
                                 $case->value => "<span style='font-family:{$case->getLabel()}'>{$case->getLabel()}</span>",
                             ]),
                     ),
@@ -112,7 +112,7 @@ class ManageReport extends SettingsPage
             ]);
     }
 
-    public function sendSuccessNotification($title)
+    public function sendSuccessNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -120,7 +120,7 @@ class ManageReport extends SettingsPage
             ->send();
     }
 
-    public function sendErrorNotification($title)
+    public function sendErrorNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -138,17 +138,17 @@ class ManageReport extends SettingsPage
         return __('Report');
     }
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
         return __('Report');
     }
 
-    public function getHeading(): string|Htmlable
+    public function getHeading(): string | Htmlable
     {
         return __('Report');
     }
 
-    public function getSubheading(): string|Htmlable|null
+    public function getSubheading(): string | Htmlable | null
     {
         return 'Gestionar la configuracion de la apariencia';
     }

@@ -7,15 +7,24 @@ use Spatie\LaravelSettings\Settings;
 class MailSettings extends Settings
 {
     public string $from_address;
+
     public string $from_name;
-    public ?string $driver;
-    public ?string $host;
+
+    public ?string $driver = null;
+
+    public ?string $host = null;
+
     public int $port;
+
     public string $encryption;
-    public ?string $username;
-    public ?string $password;
-    public ?int $timeout;
-    public ?string $local_domain;
+
+    public ?string $username = null;
+
+    public ?string $password = null;
+
+    public ?int $timeout = null;
+
+    public ?string $local_domain = null;
 
     public static function group(): string
     {

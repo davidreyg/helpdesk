@@ -22,6 +22,7 @@ class ManageMail extends SettingsPage
     protected static string $settings = MailSettings::class;
 
     protected static ?int $navigationSort = 99;
+
     protected static ?string $navigationIcon = 'fluentui-mail-settings-20';
 
     /**
@@ -52,86 +53,86 @@ class ManageMail extends SettingsPage
                 Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\Section::make('Configuration')
-                            ->label(fn() => __('page.mail_settings.sections.config.title'))
+                            ->label(fn () => __('page.mail_settings.sections.config.title'))
                             ->icon('fluentui-calendar-settings-32-o')
                             ->schema([
                                 Forms\Components\Grid::make()
                                     ->schema([
-                                        Forms\Components\Select::make('driver')->label(fn() => __('page.mail_settings.fields.driver'))
+                                        Forms\Components\Select::make('driver')->label(fn () => __('page.mail_settings.fields.driver'))
                                             ->options([
-                                                "smtp" => "SMTP (Recommended)",
-                                                "mailgun" => "Mailgun",
-                                                "ses" => "Amazon SES",
-                                                "postmark" => "Postmark",
+                                                'smtp' => 'SMTP (Recommended)',
+                                                'mailgun' => 'Mailgun',
+                                                'ses' => 'Amazon SES',
+                                                'postmark' => 'Postmark',
                                             ])
                                             ->native(false)
                                             ->required()
                                             ->columnSpan(2),
-                                        Forms\Components\TextInput::make('host')->label(fn() => __('page.mail_settings.fields.host'))
+                                        Forms\Components\TextInput::make('host')->label(fn () => __('page.mail_settings.fields.host'))
                                             ->required(),
-                                        Forms\Components\TextInput::make('port')->label(fn() => __('page.mail_settings.fields.port')),
-                                        Forms\Components\Select::make('encryption')->label(fn() => __('page.mail_settings.fields.encryption'))
+                                        Forms\Components\TextInput::make('port')->label(fn () => __('page.mail_settings.fields.port')),
+                                        Forms\Components\Select::make('encryption')->label(fn () => __('page.mail_settings.fields.encryption'))
                                             ->options([
-                                                "ssl" => "SSL",
-                                                "tls" => "TLS",
+                                                'ssl' => 'SSL',
+                                                'tls' => 'TLS',
                                             ])
                                             ->native(false),
-                                        Forms\Components\TextInput::make('timeout')->label(fn() => __('page.mail_settings.fields.timeout')),
-                                        Forms\Components\TextInput::make('username')->label(fn() => __('page.mail_settings.fields.username')),
-                                        Forms\Components\TextInput::make('password')->label(fn() => __('page.mail_settings.fields.password'))
+                                        Forms\Components\TextInput::make('timeout')->label(fn () => __('page.mail_settings.fields.timeout')),
+                                        Forms\Components\TextInput::make('username')->label(fn () => __('page.mail_settings.fields.username')),
+                                        Forms\Components\TextInput::make('password')->label(fn () => __('page.mail_settings.fields.password'))
                                             ->password()
                                             ->revealable(),
                                     ])
                                     ->columns(3),
-                            ])
+                            ]),
                     ])
                     ->columnSpan([
-                        "md" => 3
+                        'md' => 3,
                     ]),
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Section::make('From (Sender)')
-                            ->label(fn() => __('page.mail_settings.section.sender.title'))
+                            ->label(fn () => __('page.mail_settings.section.sender.title'))
                             ->icon('fluentui-person-mail-48-o')
                             ->schema([
-                                Forms\Components\TextInput::make('from_address')->label(fn() => __('page.mail_settings.fields.email'))
+                                Forms\Components\TextInput::make('from_address')->label(fn () => __('page.mail_settings.fields.email'))
                                     ->required(),
-                                Forms\Components\TextInput::make('from_name')->label(fn() => __('page.mail_settings.fields.name'))
+                                Forms\Components\TextInput::make('from_name')->label(fn () => __('page.mail_settings.fields.name'))
                                     ->required(),
                             ]),
                     ])
                     ->columnSpan([
-                        "md" => 2
+                        'md' => 2,
                     ]),
                 Forms\Components\Section::make()
                     ->schema([
 
                         Forms\Components\Section::make('Mail to')
-                            ->label(fn() => __('page.mail_settings.section.mail_to.title'))
+                            ->label(fn () => __('page.mail_settings.section.mail_to.title'))
                             ->schema([
                                 Forms\Components\TextInput::make('mail_to')
-                                    ->label(fn() => __('page.mail_settings.fields.mail_to'))
+                                    ->label(fn () => __('page.mail_settings.fields.mail_to'))
                                     ->hiddenLabel()
-                                    ->placeholder(fn() => __('page.mail_settings.fields.placeholder.receiver_email'))
+                                    ->placeholder(fn () => __('page.mail_settings.fields.placeholder.receiver_email'))
                                     ->required(),
                                 Forms\Components\Actions::make([
                                     Forms\Components\Actions\Action::make('Send Test Mail')
-                                        ->label(fn() => __('page.mail_settings.actions.send_test_mail'))
+                                        ->label(fn () => __('page.mail_settings.actions.send_test_mail'))
                                         ->action('sendTestMail')
                                         ->color('warning')
-                                        ->icon('fluentui-mail-alert-28-o')
+                                        ->icon('fluentui-mail-alert-28-o'),
                                 ])->fullWidth(),
-                            ])
+                            ]),
                     ])
                     ->columnSpan([
-                        "md" => 1
+                        'md' => 1,
                     ]),
             ])
             ->columns(3)
             ->statePath('data');
     }
 
-    public function save(MailSettings $settings = null): void
+    public function save(?MailSettings $settings = null): void
     {
         try {
             $this->callHook('beforeValidate');
@@ -152,33 +153,35 @@ class ManageMail extends SettingsPage
             $this->sendSuccessNotification('Mail Settings updated.');
 
             $this->redirect(static::getUrl(), navigate: FilamentView::hasSpaMode() && is_app_url(static::getUrl()));
-        } catch (\Throwable $th) {
-            $this->sendErrorNotification('Failed to update settings. ' . $th->getMessage());
-            throw $th;
+        } catch (\Throwable $throwable) {
+            $this->sendErrorNotification('Failed to update settings. ' . $throwable->getMessage());
+
+            throw $throwable;
         }
     }
 
-    public function sendTestMail(MailSettings $settings = null)
+    public function sendTestMail(?MailSettings $settings = null): void
     {
         $data = $this->form->getState();
 
         $settings->loadMailSettingsToConfig($data);
+
         try {
             $mailTo = $data['mail_to'];
             $mailData = [
                 'title' => 'This is a test email to verify SMTP settings',
-                'body' => 'This is for testing email using smtp.'
+                'body' => 'This is for testing email using smtp.',
             ];
 
             Mail::to($mailTo)->send(new TestMail($mailData));
 
             $this->sendSuccessNotification('Mail Sent to: ' . $mailTo);
-        } catch (\Exception $e) {
-            $this->sendErrorNotification($e->getMessage());
+        } catch (\Exception $exception) {
+            $this->sendErrorNotification($exception->getMessage());
         }
     }
 
-    public function sendSuccessNotification($title)
+    public function sendSuccessNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -186,7 +189,7 @@ class ManageMail extends SettingsPage
             ->send();
     }
 
-    public function sendErrorNotification($title)
+    public function sendErrorNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -201,21 +204,21 @@ class ManageMail extends SettingsPage
 
     public static function getNavigationLabel(): string
     {
-        return __("page.mail_settings.navigationLabel");
+        return __('page.mail_settings.navigationLabel');
     }
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
-        return __("page.mail_settings.title");
+        return __('page.mail_settings.title');
     }
 
-    public function getHeading(): string|Htmlable
+    public function getHeading(): string | Htmlable
     {
-        return __("page.mail_settings.heading");
+        return __('page.mail_settings.heading');
     }
 
-    public function getSubheading(): string|Htmlable|null
+    public function getSubheading(): string | Htmlable | null
     {
-        return __("page.mail_settings.subheading");
+        return __('page.mail_settings.subheading');
     }
 }

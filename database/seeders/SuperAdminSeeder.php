@@ -7,7 +7,6 @@ use App\Enums\GenderEnum;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class SuperAdminSeeder extends Seeder
@@ -17,7 +16,7 @@ class SuperAdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $employee = Employee::create([
+        $employee = \App\Models\Employee::query()->create([
             'names' => 'Fany',
             'paternal_surname' => 'García',
             'maternal_surname' => 'Farfán',
@@ -28,9 +27,9 @@ class SuperAdminSeeder extends Seeder
             'document_number' => fake()->numerify('########'), // 8-digit document number
             'gender' => GenderEnum::F,
             'address' => fake()->address(),
-            'company_id' => Company::first()->id,
+            'company_id' => \App\Models\Company::query()->first()->id,
         ]);
-        $superadmin = User::create([
+        $superadmin = \App\Models\User::query()->create([
             'name' => 'superadmin',
             'email' => 'fany@superadmin.com',
             'email_verified_at' => now(),

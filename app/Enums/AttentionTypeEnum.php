@@ -9,9 +9,8 @@ enum AttentionTypeEnum: string implements HasLabel
     case Solicitud = 'Solicitud';
     case Requerimiento = 'Requerimiento';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return $this->value;
     }
-
 }

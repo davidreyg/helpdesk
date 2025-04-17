@@ -11,17 +11,25 @@ use Spatie\LaravelSettings\Settings;
 class AppearanceSettings extends Settings
 {
     public Font $font;
+
     public TableSortDirection $table_sort_direction;
+
     public RecordsPerPage $records_per_page;
+
     public AppColor $danger;
+
     public AppColor $gray;
+
     public AppColor $info;
+
     public AppColor $primary;
+
     public AppColor $success;
+
     public AppColor $warning;
+
     public static function group(): string
     {
         return 'appearance';
     }
-
 }

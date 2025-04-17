@@ -16,7 +16,7 @@ enum RecordsPerPage: int implements HasLabel
 
     public const DEFAULT = self::Ten->value;
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return (string) $this->value;
     }

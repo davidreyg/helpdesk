@@ -17,10 +17,10 @@ class CurrencyConverter
         return number_format((float) $temp_balance, $new_attr->getPrecision(), $new_attr->getDecimalMark(), $new_attr->getThousandsSeparator());
     }
 
-    public static function convertBalance(int $balance, string $oldCurrency, string $newCurrency): int
-    {
-        return money($balance, $oldCurrency)->swapAmountFor($newCurrency);
-    }
+    // public static function convertBalance(int $balance, string $oldCurrency, string $newCurrency): int
+    // {
+    //     return money($balance, $oldCurrency)->swapAmountFor($newCurrency);
+    // }
 
     public static function prepareForMutator(int $balance, string $currency): string
     {
@@ -31,5 +31,4 @@ class CurrencyConverter
     {
         return money($balance, $currency, true)->getAmount();
     }
-
 }

@@ -13,7 +13,7 @@ enum ReportType: string implements HasLabel
     case ANEXO_UNO = 'anexo-uno-pdf';
     case INDICADORES = 'indicadores-pdf';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return (string) ucwords($this->name);
     }

@@ -12,19 +12,18 @@ class StatsOverview extends BaseWidget
 {
     protected static ?string $pollingInterval = null;
 
-
     protected function getStats(): array
     {
         return [
-            Stat::make(__('Employee'), Employee::count())
+            Stat::make(__('Employee'), \App\Models\Employee::query()->count())
                 ->description('32k increase')
                 ->color('success')
                 ->descriptionIcon('heroicon-m-arrow-trending-up'),
-            Stat::make(__('Company'), Company::count())
+            Stat::make(__('Company'), \App\Models\Company::query()->count())
                 ->description('32k increase')
                 ->color('success')
                 ->descriptionIcon('heroicon-m-arrow-trending-up'),
-            Stat::make(__('Incident'), Incident::count())
+            Stat::make(__('Incident'), \App\Models\Incident::query()->count())
                 ->description('32k increase')
                 ->color('success')
                 ->descriptionIcon('heroicon-m-arrow-trending-up'),

@@ -5,7 +5,6 @@ namespace App\Filament\Admin\Pages\Settings;
 use App\Settings\CurrencySettings;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Pages\SettingsPage;
 use Illuminate\Contracts\Support\Htmlable;
@@ -13,8 +12,11 @@ use Illuminate\Contracts\Support\Htmlable;
 class ManageCurrency extends SettingsPage
 {
     use HasPageShield;
+
     protected static ?string $navigationIcon = 'tabler-settings-dollar';
+
     protected static ?int $navigationSort = 99;
+
     protected static string $settings = CurrencySettings::class;
 
     public function form(Form $form): Form
@@ -37,10 +39,10 @@ class ManageCurrency extends SettingsPage
                                         Forms\Components\Toggle::make('symbol_first')->inline(false)->label(__('Symbol First'))->required(),
                                     ])
                                     ->columns(3),
-                            ])
+                            ]),
                     ])
                     ->columnSpan([
-                        "md" => 2
+                        'md' => 2,
                     ]),
             ]);
     }
@@ -55,12 +57,12 @@ class ManageCurrency extends SettingsPage
         return __('Currency');
     }
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
         return __('Currency');
     }
 
-    public function getHeading(): string|Htmlable
+    public function getHeading(): string | Htmlable
     {
         return __('Currency');
     }

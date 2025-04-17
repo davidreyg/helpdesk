@@ -14,25 +14,21 @@ use Illuminate\View\Component;
 class QuotationPdf extends Component
 {
     use HasFont;
-    public ReportSettings $reportSettings;
-    public GeneralSettings $generalSettings;
-    public Quotation $quotation;
+
     public string $fontFam;
+
     public Htmlable $fontHtml;
 
-    public function __construct(Quotation $datos, ReportSettings $reportSettings, GeneralSettings $generalSettings)
+    public function __construct(public Quotation $quotation, public ReportSettings $reportSettings, public GeneralSettings $generalSettings)
     {
-        $this->reportSettings = $reportSettings;
         $this->fontFam = $this->reportSettings->font->getLabel();
         $this->fontHtml = $this->font($this->reportSettings->font->getLabel())->getFontHtml();
-        $this->generalSettings = $generalSettings;
-        $this->quotation = $datos;
     }
 
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): View | Closure | string
     {
         return view('components.pdf.quotation-pdf');
     }

@@ -26,7 +26,7 @@ if (!function_exists('moneyMask')) {
     {
         $precision = currency($currency)->getPrecision();
 
-        return RawJs::make(generateJsCode($precision, $currency));
+        return RawJs::make(generateJsCode($precision . '', $currency));
     }
 }
 

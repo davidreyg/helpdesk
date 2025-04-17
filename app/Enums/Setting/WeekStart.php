@@ -16,7 +16,7 @@ enum WeekStart: int implements HasLabel
 
     public const DEFAULT = self::Monday->value;
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return today()->isoWeekday($this->value)->dayName;
     }

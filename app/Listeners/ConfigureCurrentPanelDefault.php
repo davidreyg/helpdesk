@@ -16,37 +16,18 @@ use App\Settings\LocalizationSettings;
 use App\Settings\MailSettings;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TimePicker;
 use Filament\Notifications\Notification;
 use Filament\Support\Facades\FilamentColor;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class ConfigureCurrentPanelDefault
 {
-    private GeneralSettings $generalSettings;
-    private MailSettings $mailSettings;
-    private CurrencySettings $currencySettings;
-    private AppearanceSettings $appearanceSettings;
-    private LocalizationSettings $localizationSettings;
     /**
      * Create the event listener.
      */
-    public function __construct(
-        GeneralSettings $generalSettings,
-        MailSettings $mailSettings,
-        CurrencySettings $currencySettings,
-        AppearanceSettings $appearanceSettings,
-        LocalizationSettings $localizationSettings
-    ) {
-        $this->generalSettings = $generalSettings;
-        $this->mailSettings = $mailSettings;
-        $this->currencySettings = $currencySettings;
-        $this->appearanceSettings = $appearanceSettings;
-        $this->localizationSettings = $localizationSettings;
+    public function __construct(private readonly GeneralSettings $generalSettings, private readonly AppearanceSettings $appearanceSettings, private readonly LocalizationSettings $localizationSettings)
+    {
     }
 
     /**
@@ -68,13 +49,12 @@ class ConfigureCurrentPanelDefault
         });
 
         Filament::getCurrentPanel()
-            ->font($this->appearanceSettings->font->value ?? Font::DEFAULT )
+            ->font($this->appearanceSettings->font->value ?? Font::DEFAULT)
             ->brandName($this->generalSettings->brand_name)
             ->brandLogo(\Storage::url($this->generalSettings->brand_logo))
             ->brandLogoHeight($this->generalSettings->brand_logoHeight)
-            ->favicon(\Storage::url($this->generalSettings->site_favicon))
-            // ->colors($this->appearanceSettings->site_theme)
-        ;
+            ->favicon(\Storage::url($this->generalSettings->site_favicon));
+        // ->colors($this->appearanceSettings->site_theme)
         FilamentColor::register([
             'primary' => $this->appearanceSettings->primary->getColor(),
             'danger' => $this->appearanceSettings->danger->getColor(),
@@ -92,12 +72,12 @@ class ConfigureCurrentPanelDefault
                 ->defaultPaginationPageOption($defaultPaginationPageOption)
                 ->extremePaginationLinks();
         }, isImportant: true);
-        DatePicker::configureUsing(static function (DatePicker $component) use ($dateFormat, $weekStart) {
+        DatePicker::configureUsing(static function (DatePicker $component) use ($dateFormat, $weekStart): void {
             $component
                 ->displayFormat($dateFormat)
                 ->firstDayOfWeek($weekStart);
         });
-        TimePicker::configureUsing(static function (TimePicker $component) use ($timeFormat) {
+        TimePicker::configureUsing(static function (TimePicker $component) use ($timeFormat): void {
             $component
                 ->displayFormat($timeFormat);
         });

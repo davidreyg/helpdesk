@@ -1,6 +1,6 @@
 <?php
-namespace App\States\Incident;
 
+namespace App\States\Incident;
 
 class Pending extends IncidentState
 {

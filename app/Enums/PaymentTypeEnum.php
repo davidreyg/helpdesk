@@ -12,7 +12,7 @@ enum PaymentTypeEnum: string implements HasLabel
     case YAPE = 'YAPE';
     case PLIN = 'PLIN';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return $this->name;
     }

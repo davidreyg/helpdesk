@@ -14,7 +14,7 @@ class StoreIncidentController extends Controller
     public function __invoke(StoreIncidentRequest $request)
     {
         // return $request->validated();
-        $incident = Incident::newModelInstance($request->validated());
+        $incident = Incident::query()->newModelInstance($request->validated());
         $incident->code = 2;
         $incident->attention_date = now();
         $incident->save();

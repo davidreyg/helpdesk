@@ -19,7 +19,7 @@ enum TimeFormat: string implements HasLabel
 
     public const DEFAULT = self::G12_CAP->value;
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return Carbon::createFromTime(5, 30)->translatedFormat($this->value);
     }
