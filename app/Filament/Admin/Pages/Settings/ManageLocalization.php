@@ -100,7 +100,7 @@ class ManageLocalization extends SettingsPage
         }
     }
 
-    public function sendSuccessNotification(string | \Closure | null $title): void
+    public function sendSuccessNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -108,7 +108,7 @@ class ManageLocalization extends SettingsPage
             ->send();
     }
 
-    public function sendErrorNotification(string | \Closure | null $title): void
+    public function sendErrorNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -126,17 +126,17 @@ class ManageLocalization extends SettingsPage
         return __('Localize');
     }
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         return __('Localize');
     }
 
-    public function getHeading(): string | Htmlable
+    public function getHeading(): string|Htmlable
     {
         return __('Localize');
     }
 
-    public function getSubheading(): string | Htmlable | null
+    public function getSubheading(): string|Htmlable|null
     {
         return __('Localize');
     }

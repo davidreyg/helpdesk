@@ -252,7 +252,7 @@ class QuotationResource extends Resource
     {
         // Retrieve the state path of the form. Most likely it's `data` but it could be something else.
         $currency = $get('../../currency') ?? 'PEN';
-        $qty = floatval($get('quantity'));
+        $qty = (float) ($get('quantity'));
         $price = $get('price');
         $priceInt = CurrencyConverter::prepareForAccessor($price, $currency);
 

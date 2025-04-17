@@ -191,7 +191,7 @@ class ManageAppearance extends SettingsPage
         }
     }
 
-    public function sendSuccessNotification(string | \Closure | null $title): void
+    public function sendSuccessNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -199,7 +199,7 @@ class ManageAppearance extends SettingsPage
             ->send();
     }
 
-    public function sendErrorNotification(string | \Closure | null $title): void
+    public function sendErrorNotification(string|\Closure|null $title): void
     {
         Notification::make()
             ->title($title)
@@ -217,12 +217,12 @@ class ManageAppearance extends SettingsPage
         return __('Appearance');
     }
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         return __('Appearance');
     }
 
-    public function getHeading(): string | Htmlable
+    public function getHeading(): string|Htmlable
     {
         return __('Appearance');
     }
