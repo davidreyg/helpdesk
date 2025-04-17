@@ -9,9 +9,10 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\SettingsPage;
 use Filament\Support\Facades\FilamentView;
-use Illuminate\Contracts\Support\Htmlable;
 
 use function Filament\Support\is_app_url;
+
+use Illuminate\Contracts\Support\Htmlable;
 
 class ManageGeneral extends SettingsPage
 {

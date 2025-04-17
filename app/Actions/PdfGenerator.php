@@ -132,7 +132,7 @@ class PdfGenerator
     public function getFilename(): string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
-        if (!isset($this->filename) || ($this->filename === '' || $this->filename === '0')) {
+        if (! isset($this->filename) || ($this->filename === '' || $this->filename === '0')) {
             $this->filename = 'DocumentoPdf';
         }
 
@@ -142,7 +142,7 @@ class PdfGenerator
     public function getMarginTop(): string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
-        if (!isset($this->marginTop) || ($this->marginTop === '' || $this->marginTop === '0')) {
+        if (! isset($this->marginTop) || ($this->marginTop === '' || $this->marginTop === '0')) {
             $this->marginTop = '90px';
         }
 
@@ -152,7 +152,7 @@ class PdfGenerator
     public function getMarginBottom(): string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
-        if (!isset($this->marginBottom) || ($this->marginBottom === '' || $this->marginBottom === '0')) {
+        if (! isset($this->marginBottom) || ($this->marginBottom === '' || $this->marginBottom === '0')) {
             $this->marginBottom = '50px';
         }
 
@@ -162,7 +162,7 @@ class PdfGenerator
     public function getMarginLeft(): string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
-        if (!isset($this->marginLeft) || ($this->marginLeft === '' || $this->marginLeft === '0')) {
+        if (! isset($this->marginLeft) || ($this->marginLeft === '' || $this->marginLeft === '0')) {
             $this->marginLeft = '30px';
         }
 
@@ -172,7 +172,7 @@ class PdfGenerator
     public function getMarginRight(): string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
-        if (!isset($this->marginRight) || ($this->marginRight === '' || $this->marginRight === '0')) {
+        if (! isset($this->marginRight) || ($this->marginRight === '' || $this->marginRight === '0')) {
             $this->marginRight = '30px';
         }
 

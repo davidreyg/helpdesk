@@ -51,7 +51,7 @@ class QuotationResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('code')
                     ->label(__('Code'))
-                    ->default(fn(): string => 'COT-' . str_pad(Quotation::generateNextNumber() . '', 7, '0', STR_PAD_LEFT))
+                    ->default(fn (): string => 'COT-' . str_pad(Quotation::generateNextNumber() . '', 7, '0', STR_PAD_LEFT))
                     ->disabled()
                     ->required()
                     ->maxLength(100),
@@ -112,7 +112,7 @@ class QuotationResource extends Resource
                                     ->maxValue(99)
                                     ->live()
                                     ->hint(
-                                        fn(TextInput $component): \Illuminate\Support\HtmlString => new HtmlString(
+                                        fn (TextInput $component): \Illuminate\Support\HtmlString => new HtmlString(
                                             \Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])
                                         )
                                     )
@@ -137,7 +137,7 @@ class QuotationResource extends Resource
                                     ->default(0)
                                     ->live(true)
                                     ->hint(
-                                        fn(TextInput $component): \Illuminate\Support\HtmlString => new HtmlString(
+                                        fn (TextInput $component): \Illuminate\Support\HtmlString => new HtmlString(
                                             \Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])
                                         )
                                     )
@@ -145,11 +145,11 @@ class QuotationResource extends Resource
                                         self::updateItemTotals($get, $set, $livewire);
                                         self::updateQuotationTotals($livewire);
                                     })
-                                    ->money(fn(Get $get): mixed => $get('../../currency')),
+                                    ->money(fn (Get $get): mixed => $get('../../currency')),
                                 TextInput::make('total')
                                     ->readOnly()
                                     ->hiddenLabel()
-                                    ->money(fn(Get $get): mixed => $get('../../currency'))
+                                    ->money(fn (Get $get): mixed => $get('../../currency'))
                                     ->afterStateHydrated(function (Get $get, Set $set, $livewire): void {
                                         self::updateItemTotals($get, $set, $livewire);
                                         self::updateQuotationTotals($livewire);
@@ -209,7 +209,7 @@ class QuotationResource extends Resource
                 Tables\Columns\TextColumn::make('currency')
                     ->label(__('Currency')),
                 Tables\Columns\TextColumn::make('total')
-                    ->formatStateUsing(fn(string $state, Quotation $record): \Akaunting\Money\Money => money($state, $record->currency->value)),
+                    ->formatStateUsing(fn (string $state, Quotation $record): \Akaunting\Money\Money => money($state, $record->currency->value)),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -271,7 +271,7 @@ class QuotationResource extends Resource
         $totalSum = collect($data['items'])
             ->pluck('total')
             ->filter()
-            ->map(fn($item): int => CurrencyConverter::prepareForAccessor($item, $currency))
+            ->map(fn ($item): int => CurrencyConverter::prepareForAccessor($item, $currency))
             ->sum();
         data_set($livewire, $statePath . '.subTotal', $totalSum);
         // dump($totalSum);

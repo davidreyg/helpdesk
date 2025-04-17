@@ -10,12 +10,13 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Support\Facades\FilamentView;
+
+use function Filament\Support\is_app_url;
+
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Jeffgreco13\FilamentBreezy\Livewire\MyProfileComponent;
-
-use function Filament\Support\is_app_url;
 
 /**
  * @property Form $form

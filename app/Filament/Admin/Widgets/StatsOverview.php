@@ -2,9 +2,6 @@
 
 namespace App\Filament\Admin\Widgets;
 
-use App\Models\Company;
-use App\Models\Employee;
-use App\Models\Incident;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 

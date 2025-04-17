@@ -36,28 +36,28 @@ class Quotation extends Model
     protected function code(): Attribute
     {
         return Attribute::make(
-            get: fn(): string => 'COT-' . str_pad($this->number . '', 7, '0', STR_PAD_LEFT)
+            get: fn (): string => 'COT-' . str_pad($this->number . '', 7, '0', STR_PAD_LEFT)
         );
     }
 
     protected function subTotal(): Attribute
     {
         return Attribute::make(
-            get: fn(): int => $this->quotationItems->sum(fn($item) => $item->total),
+            get: fn (): int => $this->quotationItems->sum(fn ($item) => $item->total),
         );
     }
 
     protected function igv(): Attribute
     {
         return Attribute::make(
-            get: fn(): float => $this->subTotal * 0.18
+            get: fn (): float => $this->subTotal * 0.18
         );
     }
 
     protected function total(): Attribute
     {
         return Attribute::make(
-            get: fn(): float => $this->subTotal + $this->igv
+            get: fn (): float => $this->subTotal + $this->igv
         );
     }
 

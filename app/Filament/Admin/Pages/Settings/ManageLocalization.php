@@ -13,9 +13,10 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\SettingsPage;
 use Filament\Support\Facades\FilamentView;
-use Illuminate\Contracts\Support\Htmlable;
 
 use function Filament\Support\is_app_url;
+
+use Illuminate\Contracts\Support\Htmlable;
 
 class ManageLocalization extends SettingsPage
 {
@@ -99,7 +100,7 @@ class ManageLocalization extends SettingsPage
         }
     }
 
-    public function sendSuccessNotification(string|\Closure|null $title): void
+    public function sendSuccessNotification(string | \Closure | null $title): void
     {
         Notification::make()
             ->title($title)
@@ -107,7 +108,7 @@ class ManageLocalization extends SettingsPage
             ->send();
     }
 
-    public function sendErrorNotification(string|\Closure|null $title): void
+    public function sendErrorNotification(string | \Closure | null $title): void
     {
         Notification::make()
             ->title($title)

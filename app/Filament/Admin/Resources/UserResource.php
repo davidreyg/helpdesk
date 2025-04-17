@@ -73,7 +73,7 @@ class UserResource extends Resource
                                 Select::make('roles')->label('Role')
                                     ->hiddenLabel()
                                     ->relationship('roles', 'name')
-                                    ->getOptionLabelFromRecordUsing(fn(Role $record) => Str::headline($record->name))
+                                    ->getOptionLabelFromRecordUsing(fn (Role $record) => Str::headline($record->name))
                                     ->multiple()
                                     ->preload()
                                     ->maxItems(1)
@@ -84,41 +84,41 @@ class UserResource extends Resource
                             ->schema([
                                 Forms\Components\TextInput::make('password')
                                     ->password()
-                                    ->dehydrateStateUsing(fn(string $state): string => Hash::make($state))
-                                    ->dehydrated(fn(?string $state): bool => filled($state))
+                                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
+                                    ->dehydrated(fn (?string $state): bool => filled($state))
                                     ->revealable()
                                     ->required(),
                                 Forms\Components\TextInput::make('passwordConfirmation')
                                     ->password()
-                                    ->dehydrateStateUsing(fn(string $state): string => Hash::make($state))
-                                    ->dehydrated(fn(?string $state): bool => filled($state))
+                                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
+                                    ->dehydrated(fn (?string $state): bool => filled($state))
                                     ->revealable()
                                     ->same('password')
                                     ->required(),
                             ])
                             ->compact()
-                            ->hidden(fn(string $operation): bool => $operation === 'edit'),
+                            ->hidden(fn (string $operation): bool => $operation === 'edit'),
                         Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\Placeholder::make('email_verified_at')
                                     ->label(__('Email verified at'))
-                                    ->content(fn(User $record): ?string => $record->email_verified_at),
+                                    ->content(fn (User $record): ?string => $record->email_verified_at),
                                 Forms\Components\Actions::make([
                                     Action::make('resend_verification')
                                         ->label(__('Resend verification'))
                                         ->color('info')
-                                        ->action(fn(MailSettings $settings, Model $record) => static::doResendEmailVerification($settings, $record)),
+                                        ->action(fn (MailSettings $settings, Model $record) => static::doResendEmailVerification($settings, $record)),
                                 ])
-                                    ->hidden(fn(User $user): bool => $user->email_verified_at != null)
+                                    ->hidden(fn (User $user): bool => $user->email_verified_at != null)
                                     ->fullWidth(),
                                 Forms\Components\Placeholder::make('created_at')
                                     ->label(__('validation.attributes.created_at'))
-                                    ->content(fn(User $record): ?string => $record->created_at?->diffForHumans()),
+                                    ->content(fn (User $record): ?string => $record->created_at?->diffForHumans()),
                                 Forms\Components\Placeholder::make('updated_at')
                                     ->label(__('validation.attributes.updated_at'))
-                                    ->content(fn(User $record): ?string => $record->updated_at?->diffForHumans()),
+                                    ->content(fn (User $record): ?string => $record->updated_at?->diffForHumans()),
                             ])
-                            ->hidden(fn(string $operation): bool => $operation === 'create'),
+                            ->hidden(fn (string $operation): bool => $operation === 'create'),
                     ])
                     ->columnSpan(1),
             ])
@@ -136,7 +136,7 @@ class UserResource extends Resource
                     // ->description(fn(User $record): string => $record->employee . ' ' . $record->lastname)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('roles.name')->label('Role')
-                    ->formatStateUsing(fn($state): string => Str::headline($state))
+                    ->formatStateUsing(fn ($state): string => Str::headline($state))
                     ->colors(['info'])
                     ->badge(),
                 Tables\Columns\TextColumn::make('email')
@@ -183,7 +183,7 @@ class UserResource extends Resource
         ];
     }
 
-    public static function getGlobalSearchResultTitle(Model $record): string|Htmlable
+    public static function getGlobalSearchResultTitle(Model $record): string | Htmlable
     {
         return $record->email;
     }
@@ -207,7 +207,7 @@ class UserResource extends Resource
 
     public static function doResendEmailVerification($settings, $user): void
     {
-        if (!method_exists($user, 'notify')) {
+        if (! method_exists($user, 'notify')) {
             $userClass = $user::class;
 
             throw new Exception("Model [{$userClass}] does not have a [notify()] method.");

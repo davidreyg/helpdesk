@@ -2,7 +2,7 @@
 
 use Filament\Support\RawJs;
 
-if (!function_exists('generateJsCode')) {
+if (! function_exists('generateJsCode')) {
     function generateJsCode(string $precision, ?string $currency = null): string
     {
         $decimal_mark = currency($currency)->getDecimalMark();
@@ -21,7 +21,7 @@ if (!function_exists('generateJsCode')) {
 //     }
 // }
 
-if (!function_exists('moneyMask')) {
+if (! function_exists('moneyMask')) {
     function moneyMask(?string $currency = null): RawJs
     {
         $precision = currency($currency)->getPrecision();

@@ -112,7 +112,7 @@ class ManageReport extends SettingsPage
             ]);
     }
 
-    public function sendSuccessNotification(string|\Closure|null $title): void
+    public function sendSuccessNotification(string | \Closure | null $title): void
     {
         Notification::make()
             ->title($title)
@@ -120,7 +120,7 @@ class ManageReport extends SettingsPage
             ->send();
     }
 
-    public function sendErrorNotification(string|\Closure|null $title): void
+    public function sendErrorNotification(string | \Closure | null $title): void
     {
         Notification::make()
             ->title($title)

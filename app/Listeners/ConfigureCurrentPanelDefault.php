@@ -10,10 +10,8 @@ use App\Enums\Setting\TimeFormat;
 use App\Enums\Setting\WeekStart;
 use App\Events\PanelConfigured;
 use App\Settings\AppearanceSettings;
-use App\Settings\CurrencySettings;
 use App\Settings\GeneralSettings;
 use App\Settings\LocalizationSettings;
-use App\Settings\MailSettings;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TimePicker;
@@ -26,9 +24,7 @@ class ConfigureCurrentPanelDefault
     /**
      * Create the event listener.
      */
-    public function __construct(private readonly GeneralSettings $generalSettings, private readonly AppearanceSettings $appearanceSettings, private readonly LocalizationSettings $localizationSettings)
-    {
-    }
+    public function __construct(private readonly GeneralSettings $generalSettings, private readonly AppearanceSettings $appearanceSettings, private readonly LocalizationSettings $localizationSettings) {}
 
     /**
      * Handle the event.

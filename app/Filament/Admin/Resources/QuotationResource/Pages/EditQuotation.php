@@ -16,7 +16,7 @@ class EditQuotation extends EditRecord
         $record = $this->getRecord();
 
         // Si getRecord no devuelve Quotation, podemos crear una instancia de Quotation
-        $quotation = new Quotation();
+        $quotation = new Quotation;
         $quotation->fill($record->toArray()); // Copia los atributos del record a la instancia Quotation
 
         $data['code'] = $quotation->code;  // Ahora accedes a las propiedades de Quotation
@@ -31,7 +31,7 @@ class EditQuotation extends EditRecord
             Actions\Action::make('print')
                 ->label(__('Print'))
                 ->icon('tabler-printer')
-                ->url(fn(Quotation $record): string => route('quotation-pdf', [
+                ->url(fn (Quotation $record): string => route('quotation-pdf', [
                     'quotation' => $record->id,
                 ]))
                 ->openUrlInNewTab(),

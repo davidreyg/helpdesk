@@ -4,9 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\DocumentTypeEnum;
 use App\Enums\GenderEnum;
-use App\Models\Company;
-use App\Models\Employee;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class SuperAdminSeeder extends Seeder

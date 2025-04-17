@@ -22,10 +22,12 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements FilamentUser, HasAvatar, HasMedia, HasName, MustVerifyEmail
 {
-    use HasApiTokens; /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory;
-    use HasRoles;
+    use HasApiTokens;
 
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory;
+
+    use HasRoles;
     use InteractsWithMedia;
     use Notifiable;
 

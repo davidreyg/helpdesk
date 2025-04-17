@@ -30,7 +30,7 @@ class QuotationItem extends Pivot
     protected function total(): Attribute
     {
         return Attribute::make(
-            get: fn(): int => $this->quantity * CurrencyConverter::prepareForAccessor("{$this->price}", $this->quotation->currency->value)
+            get: fn (): int => $this->quantity * CurrencyConverter::prepareForAccessor("{$this->price}", $this->quotation->currency->value)
         );
     }
 
