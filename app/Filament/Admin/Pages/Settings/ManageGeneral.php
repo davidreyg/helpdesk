@@ -123,17 +123,17 @@ class ManageGeneral extends SettingsPage
         return __('page.general_settings.navigationLabel');
     }
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
         return __('page.general_settings.title');
     }
 
-    public function getHeading(): string|Htmlable
+    public function getHeading(): string | Htmlable
     {
         return __('page.general_settings.heading');
     }
 
-    public function getSubheading(): string|Htmlable|null
+    public function getSubheading(): string | Htmlable | null
     {
         return __('page.general_settings.subheading');
     }

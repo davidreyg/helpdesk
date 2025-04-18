@@ -112,7 +112,7 @@ class ManageReport extends SettingsPage
             ]);
     }
 
-    public function sendSuccessNotification(string|\Closure|null $title): void
+    public function sendSuccessNotification(string | \Closure | null $title): void
     {
         Notification::make()
             ->title($title)
@@ -120,7 +120,7 @@ class ManageReport extends SettingsPage
             ->send();
     }
 
-    public function sendErrorNotification(string|\Closure|null $title): void
+    public function sendErrorNotification(string | \Closure | null $title): void
     {
         Notification::make()
             ->title($title)
@@ -138,17 +138,17 @@ class ManageReport extends SettingsPage
         return __('Report');
     }
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
         return __('Report');
     }
 
-    public function getHeading(): string|Htmlable
+    public function getHeading(): string | Htmlable
     {
         return __('Report');
     }
 
-    public function getSubheading(): string|Htmlable|null
+    public function getSubheading(): string | Htmlable | null
     {
         return 'Gestionar la configuracion de la apariencia';
     }

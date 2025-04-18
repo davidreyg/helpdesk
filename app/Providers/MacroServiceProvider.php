@@ -22,7 +22,7 @@ class MacroServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        TextInput::macro('money', function (string|Closure|null $currency = null): static {
+        TextInput::macro('money', function (string | Closure | null $currency = null): static {
             $this->extraAttributes(['wire:key' => Str::random()])  // @phpstan-ignore-line
                 ->prefix(static function (TextInput $component) use ($currency): string {
                     $currency = $component->evaluate($currency);

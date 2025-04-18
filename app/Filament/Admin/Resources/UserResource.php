@@ -183,8 +183,9 @@ class UserResource extends Resource
         ];
     }
 
-    public static function getGlobalSearchResultTitle(Model $record): string|Htmlable
+    public static function getGlobalSearchResultTitle(Model $record): string | Htmlable
     {
+        /** @var \App\Models\User $record */
         return $record->email;
     }
 
@@ -195,6 +196,7 @@ class UserResource extends Resource
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
+        /** @var \App\Models\User $record */
         return [
             'name' => $record->name,
         ];

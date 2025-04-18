@@ -27,10 +27,17 @@
 				"shufo.vscode-blade-formatter",
 				"onecentlin.laravel5-snippets",
 				"pcbowers.alpine-intellisense",
-				"damms005.devdb"
+				"damms005.devdb",
+				"open-southeners.laravel-pint",
+				"SanderRonde.phpstan-vscode"
 			],
 			"settings": {
-				"editor.formatOnSave": true
+				"editor.formatOnSave": true,
+				"php.format.codeStyle": "Off",
+				"laravel-pint.enable": true,
+				"[php]": {
+					"editor.defaultFormatter": "open-southeners.laravel-pint"
+				}
 			}
 		}
 	},

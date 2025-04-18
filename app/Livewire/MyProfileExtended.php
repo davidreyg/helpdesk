@@ -42,7 +42,7 @@ class MyProfileExtended extends MyProfileComponent
         $this->form->fill($data);
     }
 
-    public function getUser(): Authenticatable&Model
+    public function getUser(): Authenticatable & Model
     {
         $user = Filament::auth()->user();
 

@@ -12,8 +12,11 @@ parameters:
     # Level 10 is the highest level
     level: 5
 
-#    ignoreErrors:
-#        - '#PHPDoc tag @var#'
+    ignoreErrors:
+        - '#Call to an undefined method Filament\\Forms\\Components\\TextInput::money\(\)#'
+        - '#Call to an undefined method Spatie\\Image\\Drivers\\ImageDriver::nonQueued\(\)#'
+        - '#Call to protected method getFormStatePath\(\) of class Filament\\Forms\\FormsComponent#'
+
 #
 #    excludePaths:
 #        - ./*/*/FileToBeExcluded.php

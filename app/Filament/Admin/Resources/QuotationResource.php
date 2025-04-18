@@ -137,7 +137,7 @@ class QuotationResource extends Resource
                                     ->default(0)
                                     ->live(true)
                                     ->hint(
-                                        fn (TextInput $component): \Illuminate\Support\HtmlString => new HtmlString(
+                                        fn (TextInput $component): HtmlString => new HtmlString(
                                             \Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])
                                         )
                                     )
@@ -263,11 +263,11 @@ class QuotationResource extends Resource
 
     public static function updateQuotationTotals(Component $livewire): void
     {
+        // @phpstan-ignore method.notFound
         $statePath = $livewire->getFormStatePath();
         // Retrieve the state path of the form. Most likely it's `data` but it could be something else.
-        // dd(data_get($livewire, $statePath));
         $data = data_get($livewire, $statePath);
-        $currency = data_get($livewire, $statePath . '.currency', 'PEN');
+        $currency = data_get($livewire, "$statePath.currency", 'PEN') ?? 'PEN';
         $totalSum = collect($data['items'])
             ->pluck('total')
             ->filter()

@@ -182,7 +182,7 @@ class ManageMail extends SettingsPage
         }
     }
 
-    public function sendSuccessNotification(string|\Closure|null $title): void
+    public function sendSuccessNotification(string | \Closure | null $title): void
     {
         Notification::make()
             ->title($title)
@@ -190,7 +190,7 @@ class ManageMail extends SettingsPage
             ->send();
     }
 
-    public function sendErrorNotification(string|\Closure|null $title): void
+    public function sendErrorNotification(string | \Closure | null $title): void
     {
         Notification::make()
             ->title($title)
@@ -208,17 +208,17 @@ class ManageMail extends SettingsPage
         return __('page.mail_settings.navigationLabel');
     }
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
         return __('page.mail_settings.title');
     }
 
-    public function getHeading(): string|Htmlable
+    public function getHeading(): string | Htmlable
     {
         return __('page.mail_settings.heading');
     }
 
-    public function getSubheading(): string|Htmlable|null
+    public function getSubheading(): string | Htmlable | null
     {
         return __('page.mail_settings.subheading');
     }
