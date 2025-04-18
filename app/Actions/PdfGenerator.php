@@ -43,7 +43,15 @@ class PdfGenerator
     public function handle(ReportTypeEnum $tipoReporte, object $data)
     {
         $FILENAME = $this->getFilename() . '_' . now()->format('d_m_Y') . '.pdf';
-        $html = view('components.layouts.pdf', ['current' => $tipoReporte->value, 'datos' => $data, 'filename' => $FILENAME])->render();
+        $html = view(
+            'components.layouts.pdf',
+            [
+                'current' => $tipoReporte->value,
+                'datos' => $data,
+                'filename' => $FILENAME,
+                'watermarkImageBase64' => $this->logo(),
+            ]
+        )->render();
         $request = $this->gotenberg
             ->header(Stream::string('header.html', $this->getHeader()))
             ->footer(Stream::string('footer.html', $this->footer()))
