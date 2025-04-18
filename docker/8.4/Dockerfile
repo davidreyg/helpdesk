@@ -6,11 +6,13 @@ ARG WWWGROUP
 ARG NODE_VERSION=22
 ARG MYSQL_CLIENT="mysql-client"
 ARG POSTGRES_VERSION=17
+ARG APP_DIR=/var/www/html
 
 WORKDIR /var/www/html
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=UTC
+ENV ROOT=${APP_DIR}
+ENV TZ=America/Lima
 ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
 ENV SUPERVISOR_PHP_WORKER="php /var/www/html/artisan queue:work --sleep=3 --tries=3 --timeout=90 --memory=1024"
 ENV SUPERVISOR_PHP_REVERB="php /var/www/html/artisan reverb:start --host=0.0.0.0"
