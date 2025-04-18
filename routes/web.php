@@ -7,6 +7,8 @@ use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    phpinfo();
+
     return view('welcome');
 });
 Route::get('/test', function () {

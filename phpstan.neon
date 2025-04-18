@@ -15,7 +15,6 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method Filament\\Forms\\Components\\TextInput::money\(\)#'
         - '#Call to an undefined method Spatie\\Image\\Drivers\\ImageDriver::nonQueued\(\)#'
-        - '#Call to protected method getFormStatePath\(\) of class Filament\\Forms\\FormsComponent#'
 
 #
 #    excludePaths:

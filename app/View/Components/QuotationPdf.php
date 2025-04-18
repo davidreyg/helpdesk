@@ -19,7 +19,7 @@ class QuotationPdf extends Component
 
     public Htmlable $fontHtml;
 
-    public function __construct(public Quotation $quotation, public ReportSettings $reportSettings, public GeneralSettings $generalSettings)
+    public function __construct(public Quotation $datos, public ReportSettings $reportSettings, public GeneralSettings $generalSettings)
     {
         $this->fontFam = $this->reportSettings->font->getLabel();
         $this->fontHtml = $this->font($this->reportSettings->font->getLabel())->getFontHtml();

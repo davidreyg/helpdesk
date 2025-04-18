@@ -267,7 +267,7 @@ class QuotationResource extends Resource
         $statePath = $livewire->getFormStatePath();
         // Retrieve the state path of the form. Most likely it's `data` but it could be something else.
         $data = data_get($livewire, $statePath);
-        $currency = data_get($livewire, "$statePath.currency", 'PEN') ?? 'PEN';
+        $currency = data_get($livewire, "{$statePath}.currency", 'PEN') ?? 'PEN';
         $totalSum = collect($data['items'])
             ->pluck('total')
             ->filter()

@@ -1,3 +1,6 @@
+@php
+    $quotation = $datos;
+@endphp
 <div>
     {{-- TITLE --}}
     <div class="flex justify-center items-center">

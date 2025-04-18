@@ -122,7 +122,7 @@ class PdfGenerator
     public function getHeader(): ?string
     {
         // Verifica si el header ya está inicializado, si no, lo inicializa.
-        if (empty($this->header)) {
+        if ($this->header === null || $this->header === '' || $this->header === '0') {
             $this->header('components.pdf.header');
         }
 
