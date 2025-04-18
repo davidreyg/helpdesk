@@ -7,15 +7,15 @@ ARG NODE_VERSION=22
 ARG MYSQL_CLIENT="mysql-client"
 ARG POSTGRES_VERSION=17
 ARG APP_DIR=/var/www/html
+ENV ROOT=${APP_DIR}
 
-WORKDIR /var/www/html
+WORKDIR ${ROOT}
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV ROOT=${APP_DIR}
 ENV TZ=America/Lima
-ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
-ENV SUPERVISOR_PHP_WORKER="php /var/www/html/artisan queue:work --sleep=3 --tries=3 --timeout=90 --memory=1024"
-ENV SUPERVISOR_PHP_REVERB="php /var/www/html/artisan reverb:start --host=0.0.0.0"
+ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS ${ROOT}/artisan serve --host=0.0.0.0 --port=80"
+ENV SUPERVISOR_PHP_WORKER="php ${ROOT}/artisan queue:work --sleep=3 --tries=3 --timeout=90 --memory=1024"
+ENV SUPERVISOR_PHP_REVERB="php ${ROOT}/artisan reverb:start --host=0.0.0.0"
 ENV SUPERVISOR_PHP_USER="sail"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
