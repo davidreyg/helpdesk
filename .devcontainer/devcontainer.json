@@ -1,53 +1,51 @@
 // https://aka.ms/devcontainer.json
 {
-	"name": "Existing Docker Compose (Extend)",
-	"dockerComposeFile": [
-		"../docker-compose.yml"
-	],
-	"service": "app",
-	"workspaceFolder": "/var/www/html",
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"mikestead.dotenv",
-				"amiralizadeh9480.laravel-extra-intellisense",
-				"DEVSENSE.phptools-vscode",
-				"kisstkondoros.vscode-gutter-preview",
-				"vivaxy.vscode-conventional-commits",
-				"Gruntfuggly.todo-tree",
-				"bradlc.vscode-tailwindcss",
-				"shardulm94.trailing-spaces",
-				"redhat.vscode-yaml",
-				"ctf0.php-array-symbols",
-				"usernamehw.errorlens",
-				"ms-azuretools.vscode-docker",
-				"onecentlin.laravel-blade",
-				"codingyu.laravel-goto-view",
-				"ahinkle.laravel-model-snippets",
-				"shufo.vscode-blade-formatter",
-				"onecentlin.laravel5-snippets",
-				"pcbowers.alpine-intellisense",
-				"damms005.devdb",
-				"open-southeners.laravel-pint",
-				"SanderRonde.phpstan-vscode"
-			],
-			"settings": {
-				"editor.formatOnSave": true,
-				"php.format.codeStyle": "Off",
-				"laravel-pint.enable": true,
-				"[php]": {
-					"editor.defaultFormatter": "open-southeners.laravel-pint"
-				}
-			}
-		}
-	},
-	"remoteUser": "sail",
-	"postCreateCommand": "chown -R 1000:1000 /var/www/html 2>/dev/null || true",
-	"mounts": [
-		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
-		"source=${localEnv:HOME}/.ssh,target=/home/sail/.ssh,type=bind,consistency=cached"
-	]
-	// "forwardPorts": [],
-	// "runServices": [],
-	// "shutdownAction": "none",
+  "name": "Existing Docker Compose (Extend)",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "app",
+  "workspaceFolder": "/var/www/html",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mikestead.dotenv",
+        "amiralizadeh9480.laravel-extra-intellisense",
+        "DEVSENSE.phptools-vscode",
+        "kisstkondoros.vscode-gutter-preview",
+        "vivaxy.vscode-conventional-commits",
+        "Gruntfuggly.todo-tree",
+        "bradlc.vscode-tailwindcss",
+        "shardulm94.trailing-spaces",
+        "redhat.vscode-yaml",
+        "ctf0.php-array-symbols",
+        "usernamehw.errorlens",
+        "ms-azuretools.vscode-docker",
+        "onecentlin.laravel-blade",
+        "codingyu.laravel-goto-view",
+        "ahinkle.laravel-model-snippets",
+        "shufo.vscode-blade-formatter",
+        "onecentlin.laravel5-snippets",
+        "pcbowers.alpine-intellisense",
+        "damms005.devdb",
+        "open-southeners.laravel-pint",
+        "SanderRonde.phpstan-vscode"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "php.format.codeStyle": "Off",
+        "laravel-pint.enable": true,
+        "[php]": {
+          "editor.defaultFormatter": "open-southeners.laravel-pint"
+        }
+      }
+    }
+  },
+  "remoteUser": "sail",
+  "postCreateCommand": "chown -R 1000:1000 /var/www/html 2>/dev/null || true",
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.ssh,target=/home/sail/.ssh,type=bind,consistency=cached"
+  ]
+  // "forwardPorts": [],
+  // "runServices": [],
+  // "shutdownAction": "none",
 }
