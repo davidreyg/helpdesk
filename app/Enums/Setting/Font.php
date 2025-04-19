@@ -12,12 +12,12 @@ enum Font: string implements HasLabel
     case Poppins = 'poppins';
     case NotoSans = 'noto_sans';
     case DMSans = 'dm_sans';
-    case Arial = 'arial';
-    case Helvetica = 'helvetica';
-    case Verdana = 'verdana';
+    // case Arial = 'arial';
+    // case Helvetica = 'helvetica';
+    // case Verdana = 'verdana';
     case Rubik = 'rubik';
 
-    public const DEFAULT = self::Inter->value;
+    public const DEFAULT = self::Inter;
 
     public function getLabel(): string
     {
