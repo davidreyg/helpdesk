@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Enums\ReportTypeEnum;
+use App\Settings\AppearanceSettings;
 use Gotenberg\Exceptions\GotenbergApiErrored;
 use Gotenberg\Gotenberg;
 use Gotenberg\Modules\ChromiumPdf;
@@ -50,6 +51,7 @@ class PdfGenerator
                 'datos' => $data,
                 'filename' => $FILENAME,
                 'watermarkImageBase64' => $this->logo(),
+                'fontFamily' => app(AppearanceSettings::class)->font->name,
             ]
         )->render();
         $request = $this->gotenberg

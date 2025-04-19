@@ -48,6 +48,10 @@
             /* Ajusta el tamaño según necesites */
             max-height: 70%;
         }
+
+        body {
+            font-family: '{{ $fontFamily }}', sans-serif;
+        }
     </style>
 
     <link type="text/css" rel="stylesheet" href="pdf.css">
