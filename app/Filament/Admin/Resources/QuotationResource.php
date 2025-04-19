@@ -223,7 +223,6 @@ class QuotationResource extends Resource
                     ->searchable(),
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
-                Tables\Actions\EditAction::make()->hiddenLabel()->tooltip(__('Edit')),
                 Tables\Actions\Action::make('print')
                     ->hiddenLabel()
                     ->color('warning')
@@ -233,6 +232,8 @@ class QuotationResource extends Resource
                         'quotation' => $record->id,
                     ]))
                     ->openUrlInNewTab(),
+                Tables\Actions\EditAction::make()->hiddenLabel()->tooltip(__('Edit')),
+                Tables\Actions\DeleteAction::make()->hiddenLabel()->tooltip(__('Delete')),
 
             ])
             ->bulkActions([

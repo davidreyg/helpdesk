@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('quotation_item', function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('quotation_id')->constrained();
+            $table->foreignId('quotation_id')->constrained()->cascadeOnDelete();
             $table->integer('quantity')->unsigned();
             $table->string('description', 255);
             $table->string('unit', 100);
