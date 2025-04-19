@@ -34,5 +34,13 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'microsoft' => [
+        'client_id' => env('MS_CLIENT_ID'),
+        'client_secret' => env('MS_CLIENT_SECRET'),
+        'redirect' => env('MS_REDIRECT_URL'),
+        'tenant' => env('MS_TENANT_ID'),
+        'redirect_after_callback' => env('MS_REDIRECT_AFTER_CALLBACK_URL'),
+        'proxy' => env('PROXY'),  // Optional, will be used for all requests
+    ],
 
 ];
