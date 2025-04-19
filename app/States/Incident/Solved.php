@@ -6,17 +6,17 @@ class Solved extends IncidentState
 {
     public static $name = 'solved';
 
-    public function icon(): string
+    public function getIcon(): string
     {
         return 'tabler-check';
     }
 
-    public function color(): string
+    public function getColor(): string
     {
         return 'success';
     }
 
-    public function label(): string
+    public function getLabel(): string
     {
         return __('statuses.solved');
     }

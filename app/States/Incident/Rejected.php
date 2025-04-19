@@ -6,17 +6,17 @@ class Rejected extends IncidentState
 {
     public static $name = 'rejected';
 
-    public function icon(): string
+    public function getIcon(): string
     {
         return 'tabler-cancel';
     }
 
-    public function color(): string
+    public function getColor(): string
     {
         return 'danger';
     }
 
-    public function label(): string
+    public function getLabel(): string
     {
         return __('statuses.rejected');
     }

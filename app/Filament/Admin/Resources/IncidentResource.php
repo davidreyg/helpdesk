@@ -63,6 +63,7 @@ class IncidentResource extends Resource
                     ->columnSpanFull(),
                 SpatieMediaLibraryFileUpload::make('media')
                     ->multiple()
+                    ->disk('onedrive')
                     ->maxFiles(3)
                     ->collection('files')
                     ->columnSpanFull(),
@@ -90,9 +91,6 @@ class IncidentResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->label(__('validation.attributes.status'))
-                    ->formatStateUsing(fn ($state) => $state->label())
-                    ->icon(fn ($state) => $state->icon())
-                    ->color(fn ($state) => $state->color())
                     ->badge(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -111,14 +109,10 @@ class IncidentResource extends Resource
                     Tables\Actions\Action::make('solve')
                         ->label(__('Solve'))
                         ->visible(fn (Incident $record) => $record->status->canTransitionTo(Solved::class))
-                        ->icon(fn (Incident $record): string => new Solved($record)->icon())
-                        ->color(fn (Incident $record): string => new Solved($record)->color())
                         ->action(fn (Incident $record) => $record->status->transitionTo(Solved::class)),
                     Tables\Actions\Action::make('reject')
                         ->label(__('Reject'))
                         ->visible(fn (Incident $record) => $record->status->canTransitionTo(Rejected::class))
-                        ->icon(fn (Incident $record): string => new Rejected($record)->icon())
-                        ->color(fn (Incident $record): string => new Rejected($record)->color())
                         ->action(fn (Incident $record) => $record->status->transitionTo(Rejected::class)),
                 ])
                     ->outlined()

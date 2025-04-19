@@ -6,17 +6,17 @@ class Pending extends IncidentState
 {
     public static $name = 'pending';
 
-    public function icon(): string
+    public function getIcon(): string
     {
         return 'tabler-hourglass-empty';
     }
 
-    public function color(): string
+    public function getColor(): string
     {
         return 'info';
     }
 
-    public function label(): string
+    public function getLabel(): string
     {
         return __('statuses.pending');
     }

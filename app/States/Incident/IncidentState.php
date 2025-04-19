@@ -2,20 +2,17 @@
 
 namespace App\States\Incident;
 
+use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasIcon;
+use Filament\Support\Contracts\HasLabel;
 use Spatie\ModelStates\State;
 use Spatie\ModelStates\StateConfig;
 
 /**
  * @extends State<\App\Models\Incident>
  */
-abstract class IncidentState extends State
+abstract class IncidentState extends State implements HasColor, HasIcon, HasLabel
 {
-    abstract public function color(): string;
-
-    abstract public function icon(): string;
-
-    abstract public function label(): string;
-
     public static function config(): StateConfig
     {
         return parent::config()
