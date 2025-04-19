@@ -122,7 +122,7 @@
                     </li>
                 </ol>
             </li>
-            @if (isset($quotation->extra_condititons))
+            @if (isset($quotation->extra_conditions))
                 @foreach ($quotation->extra_conditions as $item)
                     <li class="italic text-sm">{{ $item['name'] }}: {{ $item['value'] }}</li>
                 @endforeach
