@@ -69,6 +69,8 @@ services:
   gotenberg:
     image: gotenberg/gotenberg:8
     container_name: gotenberg.helpdesk
+    volumes:
+      - './public/fonts:/usr/local/share/fonts'
     networks:
       - sail
 networks:
