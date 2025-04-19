@@ -21,6 +21,7 @@ use Filament\Tables;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
 
@@ -193,8 +194,10 @@ class QuotationResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->latest())
             ->columns([
-
+                Tables\Columns\TextColumn::make('code')
+                    ->label(__('Code')),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('Attention Date'))
                     ->date()
@@ -204,8 +207,6 @@ class QuotationResource extends Resource
                     ->label(__('Company'))
                     ->wrap()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('code')
-                    ->label(__('Code')),
                 Tables\Columns\TextColumn::make('currency')
                     ->label(__('Currency')),
                 Tables\Columns\TextColumn::make('total')
@@ -222,7 +223,17 @@ class QuotationResource extends Resource
                     ->searchable(),
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->hiddenLabel()->tooltip(__('Edit')),
+                Tables\Actions\Action::make('print')
+                    ->hiddenLabel()
+                    ->color('warning')
+                    ->tooltip(__('Print'))
+                    ->icon('tabler-printer')
+                    ->url(fn (Quotation $record): string => route('quotation-pdf', [
+                        'quotation' => $record->id,
+                    ]))
+                    ->openUrlInNewTab(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
