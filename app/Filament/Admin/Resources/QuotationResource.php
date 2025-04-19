@@ -110,7 +110,7 @@ class QuotationResource extends Resource
                                     ->default(1)
                                     ->minValue(1)
                                     ->maxValue(99)
-                                    ->live()
+                                    ->live(true)
                                     ->hint(
                                         fn (TextInput $component): \Illuminate\Support\HtmlString => new HtmlString(
                                             \Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])
@@ -252,11 +252,15 @@ class QuotationResource extends Resource
     {
         // Retrieve the state path of the form. Most likely it's `data` but it could be something else.
         $currency = $get('../../currency') ?? 'PEN';
-        $qty = (float) ($get('quantity'));
-        $price = $get('price');
+        $qty = (int) ($get('quantity')) !== 0 ? (int) ($get('quantity')) : 1;
+        if ($qty === 1) {
+            $set('quantity', 1);
+        }
+
+        $price = empty($get('price')) ? ($set('price', '0.00') ?: '0.00') : ($get('price'));
         $priceInt = CurrencyConverter::prepareForAccessor($price, $currency);
 
-        $total = (int) ($priceInt * $qty);
+        $total = $priceInt * $qty;
         $totalConverted = CurrencyConverter::prepareForMutator($total, $currency);
         $set('total', $totalConverted);
     }
