@@ -1,0 +1,69 @@
+/* Definir la fuente personalizada */
+@font-face {
+    font-family: 'Inter';
+    font-display: swap;
+    font-weight: 400;
+    src: url('../fonts/Inter/Inter.woff2') format('woff2'),
+        url('../fonts/Inter/Inter.woff') format('woff'),
+        url('../fonts/Inter/Inter.ttf') format('truetype');
+}
+
+/* Definir la fuente personalizada */
+@font-face {
+    font-family: 'Rubik';
+    font-display: swap;
+    font-weight: 400;
+    src: url('../fonts/Rubik/Rubik-Regular.woff2') format('woff2'),
+        url('../fonts/Rubik/Rubik-Regular.woff') format('woff'),
+        url('../fonts/Rubik/Rubik-Regular.ttf') format('truetype');
+}
+
+/* Definir la fuente personalizada */
+@font-face {
+    font-family: 'Roboto';
+    font-display: swap;
+    font-weight: 400;
+    src: url('../fonts/Roboto/Roboto.woff2') format('woff2'),
+        url('../fonts/Roboto/Roboto.woff') format('woff'),
+        url('../fonts/Roboto/Roboto.ttf') format('truetype');
+}
+
+/* Definir la fuente personalizada */
+@font-face {
+    font-family: 'OpenSans';
+    font-display: swap;
+    font-weight: 400;
+    src: url('../fonts/OpenSans/OpenSans.woff2') format('woff2'),
+        url('../fonts/OpenSans/OpenSans.woff') format('woff'),
+        url('../fonts/OpenSans/OpenSans.ttf') format('truetype');
+}
+
+/* Definir la fuente personalizada */
+@font-face {
+    font-family: 'Poppins';
+    font-display: swap;
+    font-weight: 400;
+    src: url('../fonts/Poppins/Poppins.woff2') format('woff2'),
+        url('../fonts/Poppins/Poppins.woff') format('woff'),
+        url('../fonts/Poppins/Poppins.ttf') format('truetype');
+}
+
+/* Definir la fuente personalizada */
+@font-face {
+    font-family: 'NotoSans';
+    font-display: swap;
+    font-weight: 400;
+    src: url('../fonts/NotoSans/NotoSans.woff2') format('woff2'),
+        url('../fonts/NotoSans/NotoSans.woff') format('woff'),
+        url('../fonts/NotoSans/NotoSans.ttf') format('truetype');
+}
+
+/* Definir la fuente personalizada */
+@font-face {
+    font-family: 'DMSans';
+    font-display: swap;
+    font-weight: 400;
+    src: url('../fonts/DMSans/DMSans.woff2') format('woff2'),
+        url('../fonts/DMSans/DMSans.woff') format('woff'),
+        url('../fonts/DMSans/DMSans.ttf') format('truetype');
+}

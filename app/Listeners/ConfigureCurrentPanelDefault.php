@@ -13,6 +13,7 @@ use App\Settings\AppearanceSettings;
 use App\Settings\GeneralSettings;
 use App\Settings\LocalizationSettings;
 use Filament\Facades\Filament;
+use Filament\FontProviders\LocalFontProvider;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TimePicker;
 use Filament\Notifications\Notification;
@@ -45,7 +46,7 @@ class ConfigureCurrentPanelDefault
         });
 
         Filament::getCurrentPanel()
-            ->font($this->appearanceSettings->font->value ?? Font::DEFAULT)
+            ->font($this->appearanceSettings->font->name ?? Font::DEFAULT, url: asset('css/fonts.css'), provider: LocalFontProvider::class)
             ->brandName($this->generalSettings->brand_name)
             ->brandLogo(\Storage::url($this->generalSettings->brand_logo))
             ->brandLogoHeight($this->generalSettings->brand_logoHeight)
