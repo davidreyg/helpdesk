@@ -110,7 +110,7 @@ class QuotationResource extends Resource
                                     ->numeric()
                                     ->default(1)
                                     ->minValue(1)
-                                    ->maxValue(99)
+                                    ->maxValue(999)
                                     ->live(true)
                                     ->hint(
                                         fn (TextInput $component): \Illuminate\Support\HtmlString => new HtmlString(
