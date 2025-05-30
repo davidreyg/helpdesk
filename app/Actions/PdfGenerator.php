@@ -62,7 +62,10 @@ class PdfGenerator
             ->margins($this->getMarginTop(), $this->getMarginBottom(), $this->getMarginLeft(), $this->getMarginRight())
             ->printBackground()
             ->preferCssPageSize()
-            ->assets(Stream::path(public_path(vite('resources/css/filament/admin/theme.css', hotServer: false, relative: true)), 'pdf.css'))
+            ->assets(
+                Stream::path(public_path(vite('resources/css/filament/admin/theme.css', hotServer: false, relative: true)), 'pdf.css'),
+                Stream::path(public_path('images/certificado.png'), 'certificado.png'),
+            )
             ->html(Stream::string('pdf.html', $html));
 
         try {
@@ -89,7 +92,7 @@ class PdfGenerator
     {
         // FIXME: Quitamos esto por la reestructuracion
         // $establecimiento = auth()->user()->load('establecimiento')->establecimiento->nombre;
-        $this->header = view($view, ['logoBase64' => $this->logo()])->render();
+        $this->header = view($view, ['logoBase64' => $this->logo(), 'certificado'=>$this->certificado()])->render();
 
         return $this;
     }
@@ -195,6 +198,14 @@ class PdfGenerator
         $logoData = base64_encode(file_get_contents($logoPath));
 
         return "data:image/jpg;base64,{$logoData}";
+    }
+
+    private function certificado(): string
+    {
+        $logoPath = public_path('images/certificado.png'); // Ruta a la imagen en el sistema de archivos
+        $logoData = base64_encode(file_get_contents($logoPath));
+
+        return "data:image/png;base64,{$logoData}";
     }
 
     private function footer()
