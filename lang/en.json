@@ -273,5 +273,11 @@
   "Service": "Service",
   "Brand": "Brand",
   "Extra Conditions": "Extra Conditions",
-  "Project": "Project"
+  "Project": "Project",
+  "Purchase Order|Purchase Orders": "Purchase Order|Purchase Orders",
+  "Supplier Name": "Supplier Name",
+  "Issue": "Issue",
+  "Reference": "Reference",
+  "Attention": "Attention",
+  "Part Number": "Part Number"
 }
