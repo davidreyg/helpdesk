@@ -191,7 +191,17 @@ class PurchaseResource extends Resource
                     ->searchable(),
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('print')
+                    ->hiddenLabel()
+                    ->color('warning')
+                    ->tooltip(__('Print'))
+                    ->icon('tabler-printer')
+                    ->url(fn (Purchase $record): string => route('purchase-pdf', [
+                        'purchase' => $record->id,
+                    ]))
+                    ->openUrlInNewTab(),
+                Tables\Actions\EditAction::make()->hiddenLabel()->tooltip(__('Edit')),
+                Tables\Actions\DeleteAction::make()->hiddenLabel()->tooltip(__('Delete')),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
