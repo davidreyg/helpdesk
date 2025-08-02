@@ -92,7 +92,14 @@ class PdfGenerator
     {
         // FIXME: Quitamos esto por la reestructuracion
         // $establecimiento = auth()->user()->load('establecimiento')->establecimiento->nombre;
-        $this->header = view($view, ['logoBase64' => $this->logo(), 'certificado'=>$this->certificado()])->render();
+        $this->header = view(
+            $view,
+            [
+                'logoBase64' => $this->logo(),
+                'certificado'=>$this->certificado(),
+                'certiprof'=>$this->certiprof(),
+            ]
+        )->render();
 
         return $this;
     }
@@ -203,6 +210,14 @@ class PdfGenerator
     private function certificado(): string
     {
         $logoPath = public_path('images/certificado.png'); // Ruta a la imagen en el sistema de archivos
+        $logoData = base64_encode(file_get_contents($logoPath));
+
+        return "data:image/png;base64,{$logoData}";
+    }
+
+    private function certiprof(): string
+    {
+        $logoPath = public_path('images/certiprof.jpg'); // Ruta a la imagen en el sistema de archivos
         $logoData = base64_encode(file_get_contents($logoPath));
 
         return "data:image/png;base64,{$logoData}";

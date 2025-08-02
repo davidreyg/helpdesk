@@ -38,6 +38,7 @@
                 </td>
                 <td style="width: 60%; text-align: center;">
                     <img src="{{ $certificado }}" alt="Certificado" class="logo">
+                    <img src="{{ $certiprof }}" alt="Certificado certiprof" class="logo">
                 </td>
                 <td style="text-align: right; width: 20%;">
                     <span style="font-size: 15px"> Master Electronics Perú S.A.C</span>
