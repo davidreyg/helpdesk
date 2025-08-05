@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Enums\CurrencyEnum;
+use App\Enums\DiscountTypeEnum;
 use App\Enums\PaymentTypeEnum;
 use App\Filament\Admin\Resources\QuotationResource\Pages;
 use App\Models\Quotation;
@@ -10,7 +11,9 @@ use App\Utilities\CurrencyConverter;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
 use Filament\Forms\Form;
@@ -21,6 +24,7 @@ use Filament\Tables;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Guava\FilamentClusters\Forms\Cluster;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
@@ -157,6 +161,30 @@ class QuotationResource extends Resource
                                     }),
                             ]),
                     ]),
+                Fieldset::make('Descuento')
+                    ->relationship('discount')
+                    ->schema([
+                        Cluster::make([
+                            Select::make('type')
+                                ->hiddenLabel()
+                                ->default(DiscountTypeEnum::FIXED)
+                                ->options(DiscountTypeEnum::class),
+                            TextInput::make('amount')
+                                ->hiddenLabel()
+                                ->default(0)
+                                ->live(true)
+                                ->hint(
+                                    fn (TextInput $component): HtmlString => new HtmlString(
+                                        \Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])
+                                    )
+                                )
+                                ->afterStateUpdated(function ($livewire): void {
+                                    self::updateQuotationTotals($livewire);
+                                })
+                                ->money(fn (Get $get): mixed => $get('currency')),
+                        ])->hiddenLabel()
+                            ->columnSpanFull(),
+                    ])->columnStart(2),
                 ViewField::make('subTotal')
                     ->view('filament.admin.forms.components.total')
                     ->columnSpanFull()
@@ -289,7 +317,19 @@ class QuotationResource extends Resource
             ->filter()
             ->map(fn ($item): int => CurrencyConverter::prepareForAccessor($item, $currency))
             ->sum();
-        data_set($livewire, $statePath . '.subTotal', $totalSum);
-        // dump($totalSum);
+
+        // aplicar descuento
+        $discount = data_get($livewire, "{$statePath}.amount");
+        if (empty($discount)) {
+            data_set($livewire, "{$statePath}.amount", '0.00');
+        }
+        $discount = data_get($livewire, "{$statePath}.amount");
+        $discountInt = CurrencyConverter::prepareForAccessor($discount, $currency);
+        // dump($discountInt);
+        if ($discountInt > 0) {
+            data_set($livewire, "{$statePath}.subTotal", $totalSum - $discountInt);
+        } else {
+            data_set($livewire, "{$statePath}.subTotal", $totalSum);
+        }
     }
 }

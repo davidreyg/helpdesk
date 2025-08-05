@@ -80,9 +80,9 @@ class Quotation extends Model
         return $this->hasMany(QuotationItem::class);
     }
 
-    public function discounts()
+    public function discount()
     {
-        return $this->hasMany(Discount::class);
+        return $this->hasOne(Discount::class);
     }
 
     protected static function boot()
