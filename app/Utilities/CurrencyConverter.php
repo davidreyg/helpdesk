@@ -22,12 +22,12 @@ class CurrencyConverter
     //     return money($balance, $oldCurrency)->swapAmountFor($newCurrency);
     // }
 
-    public static function prepareForMutator(int $balance, string $currency): string
+    public static function prepareForMutator(int $balance, ?string $currency): string
     {
         return money($balance, $currency)->formatSimple();
     }
 
-    public static function prepareForAccessor(string $balance, string $currency): int
+    public static function prepareForAccessor(string $balance, ?string $currency): int
     {
         return money($balance, $currency, true)->getAmount();
     }

@@ -21,6 +21,10 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->json('extra_conditions');
             $table->foreignId('company_id')->constrained();
+            $table->boolean('has_discount')->default(false);
+            $table->string('discount_type', 20)->nullable();
+            $table->bigInteger('discount_amount')->unsigned()->nullable();
+            $table->bigInteger('discount_value')->unsigned()->nullable();
             $table->timestamps();
         });
     }

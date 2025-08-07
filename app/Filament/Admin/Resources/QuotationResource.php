@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Enums\CurrencyEnum;
+use App\Enums\DiscountTypeEnum;
 use App\Enums\PaymentTypeEnum;
 use App\Filament\Admin\Resources\QuotationResource\Pages;
 use App\Models\Quotation;
@@ -10,8 +11,10 @@ use App\Utilities\CurrencyConverter;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use Filament\Forms;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ViewField;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -24,6 +27,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
+use Wallo\FilamentSelectify\Components\ButtonGroup;
 
 class QuotationResource extends Resource
 {
@@ -113,7 +117,7 @@ class QuotationResource extends Resource
                                     ->maxValue(999)
                                     ->live(true)
                                     ->hint(
-                                        fn (TextInput $component): \Illuminate\Support\HtmlString => new HtmlString(
+                                        fn (TextInput $component): HtmlString => new HtmlString(
                                             \Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])
                                         )
                                     )
@@ -157,9 +161,60 @@ class QuotationResource extends Resource
                                     }),
                             ]),
                     ]),
+                Section::make('Descuento')
+                    ->description('Aplique descuento a la cotización.')
+                    ->schema([
+                        Toggle::make('has_discount')
+                            ->label('Aplicar descuento')
+                            ->hint(fn (Toggle $component): HtmlString => new HtmlString(\Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])))
+                            ->live()
+                            ->afterStateUpdated(function (Set $set, $livewire) {
+                                $set('discount_type', null);
+                                $set('discount_amount', null);
+                                $set('discount_value', null);
+                                self::updateDiscount($livewire);
+                            }),
+                        ButtonGroup::make('discount_type')
+                            ->hiddenLabel()
+                            ->live()
+                            ->options(DiscountTypeEnum::class)
+                            ->gridDirection('row')
+                            ->visible(fn (Get $get): bool => $get('has_discount'))
+                            ->afterStateUpdated(function (Set $set, $livewire) {
+                                $set('discount_amount', null);
+                                $set('discount_value', null);
+                                self::updateDiscount($livewire);
+                            }),
+                        Group::make([
+                            TextInput::make('discount_amount')
+                                ->visible(fn (Get $get): string => $get('discount_type') === DiscountTypeEnum::PERCENT->value)
+                                ->required()
+                                ->minValue(0)
+                                ->live(true)
+                                ->hint(fn (TextInput $component): HtmlString => new HtmlString(\Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])))
+                                ->prefix('%')
+                                ->mask(moneyMask('PEN'))
+                                ->afterStateUpdated(function (Get $get, Set $set, $livewire): void {
+                                    self::updateDiscount($livewire);
+                                }),
+                            TextInput::make('discount_value')
+                                ->required()
+                                ->readOnly(fn (Get $get): string => $get('discount_type') === DiscountTypeEnum::PERCENT->value)
+                                ->live(true)
+                                ->hint(fn (TextInput $component): HtmlString => new HtmlString(\Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="{{$state}}" />', ['state' => $component->getStatePath()])))
+                                ->money(fn (Get $get) => $get('currency'))
+                                ->afterStateUpdated(function (Get $get, Set $set, $livewire): void {
+                                    self::updateDiscount($livewire);
+                                }),
+                        ])
+                            ->columnSpanFull()
+                            ->columns(2)
+                            ->visible(fn (Get $get) =>(bool) $get('discount_type')),
+                    ])
+                    ->columns(2)
+                    ->columnSpan(1),
                 ViewField::make('subTotal')
                     ->view('filament.admin.forms.components.total')
-                    ->columnSpanFull()
                     ->viewData([
                         'min' => 1,
                         'max' => 5,
@@ -290,6 +345,45 @@ class QuotationResource extends Resource
             ->map(fn ($item): int => CurrencyConverter::prepareForAccessor($item, $currency))
             ->sum();
         data_set($livewire, $statePath . '.subTotal', $totalSum);
-        // dump($totalSum);
+        data_set($livewire, $statePath . '.baseTotal', $totalSum);
+        $hasDiscount = data_get($livewire, "{$statePath}.has_discount");
+        if ($hasDiscount) {
+            self::updateDiscount($livewire);
+        }
+    }
+
+    public static function updateDiscount(Component $livewire): void
+    {
+        // @phpstan-ignore method.notFound
+        $statePath = $livewire->getFormStatePath();
+        // Retrieve the state path of the form. Most likely it's `data` but it could be something else.
+        $data = data_get($livewire, $statePath);
+        $currency = $data['currency'];
+        $discountCalculated = 0;
+        $subTotal = $data['baseTotal'];
+
+        $discountAmount = $data['discount_amount'];
+        if ($discountAmount === '' || empty($discountAmount)) {
+            $discountAmount = '0';
+        }
+        $discountValue = $data['discount_value'];
+        if ($discountValue === '' || empty($discountValue)) {
+            $discountValue = '0';
+        }
+        switch ($data['discount_type']) {
+            case DiscountTypeEnum::PERCENT->value:
+                $discountCalculated = ($data['baseTotal'] * CurrencyConverter::prepareForAccessor($discountAmount, $currency)) / 10000;
+                $subTotal = $data['baseTotal'] - $discountCalculated;
+                data_set($livewire, $statePath . '.discount_value', CurrencyConverter::prepareForMutator($discountCalculated, $currency));
+                break;
+            case DiscountTypeEnum::FIXED->value:
+                $subTotal = $data['baseTotal'] - CurrencyConverter::prepareForAccessor($discountValue ?? '0', $currency);
+                break;
+            default:
+                // code...
+                break;
+        }
+
+        data_set($livewire, $statePath . '.subTotal', $subTotal);
     }
 }

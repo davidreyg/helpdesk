@@ -7,7 +7,7 @@
 
 <div class="w-full">
 
-    <x-filament::section aside>
+    <x-filament::section>
         <x-slot name="heading">
             {{-- User details --}}
             Detalles

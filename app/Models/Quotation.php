@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\CurrencyEnum;
+use App\Enums\DiscountTypeEnum;
 use App\Enums\PaymentTypeEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,10 @@ class Quotation extends Model
         'project',
         'extra_conditions',
         'company_id',
+        'has_discount',
+        'discount_type',
+        'discount_amount',
+        'discount_value',
     ];
 
     public static function generateNextNumber(): int
@@ -67,6 +72,8 @@ class Quotation extends Model
             'currency' => CurrencyEnum::class,
             'payment_type' => PaymentTypeEnum::class,
             'extra_conditions' => 'array',
+            'has_discount' => 'boolean',
+            'discount_type' => DiscountTypeEnum::class,
         ];
     }
 
