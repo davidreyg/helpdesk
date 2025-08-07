@@ -11,5 +11,6 @@ export default {
     './vendor/filament/**/*.blade.php',
     './vendor/statikbe/laravel-filament-chained-translation-manager/**/*.blade.php',
     './vendor/awcodes/filament-table-repeater/resources/**/*.blade.php',
+    './vendor/andrewdwallo/filament-selectify/resources/views/**/*.blade.php',
   ],
 };

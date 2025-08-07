@@ -11,6 +11,7 @@
   "require": {
     "php": "^8.2",
     "akaunting/laravel-money": "^6.0",
+    "andrewdwallo/filament-selectify": "^2.0",
     "awcodes/filament-table-repeater": "^3.1",
     "bezhansalleh/filament-language-switch": "^3.1",
     "bezhansalleh/filament-shield": "^3.3",
