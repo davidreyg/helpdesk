@@ -12,7 +12,6 @@ class CreateQuotation extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        dd($data);
 
         return static::getModel()::create($data);
     }
